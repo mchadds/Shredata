@@ -55,3 +55,14 @@ router.use((req, res, next) => {
         res.status(200).json({});
     }
 });
+
+/** Routes */
+
+/** Error Handling */
+router.use((req, res, next) => {
+    const error = new Error('not found');
+
+    return res.status(404).json({
+        message: error.message
+    });
+});
