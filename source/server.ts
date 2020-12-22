@@ -7,6 +7,7 @@ import logging from './config/logging';
 import config from './config/config';
 import mongoose from 'mongoose';
 import resortRoutes from './routes/resort';
+import snowReportRoutes from './routes/snowReport';
 
 // NAMESPACE is used to determine where the logs are coming from
 const NAMESPACE = 'Server';
@@ -75,6 +76,7 @@ router.use((req, res, next) => {
 /** Routes */
 // give routes a prefix = '/sample'
 router.use('/api/resorts', resortRoutes);
+router.use('/api/snowReports', snowReportRoutes);
 
 /** Error Handling */
 router.use((req, res, next) => {
