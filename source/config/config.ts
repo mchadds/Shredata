@@ -21,7 +21,7 @@ const MONGO_PASSWORD = process.env.MONGO_PASSWORD || 'h1tTh3Sl0p35';
 //mongodb://localhost:27017
 // also change to MONGO_URL instead of URI if not working
 //const MONGO_HOST = process.env.MONGO_URL || 'mongodb://localhost:27017';
-const MONGO_HOST = process.env.MONGO_URL || 'clusterskireport.o0o97.mongodb.net/<dbname>?retryWrites=true&w=majority';
+const MONGO_HOST = process.env.MONGO_URL || 'clusterskireport.o0o97.mongodb.net/Shredata?retryWrites=true&w=majority';
 //const MONGO_HOST = process.env.MONGO_URL || 'clusterskireport-shard-00-00.o0o97.mongodb.net';
 
 const MONGO = {
