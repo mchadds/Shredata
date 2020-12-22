@@ -3,7 +3,7 @@
 The purpose of the project is to configure Node.JS, Express, Mongoose, and TypeScript to perform RESTful API calls and write documents to a MongoDB collection in the cloud (MongoDB atlas with AWS provider)
 
 ## Conclusion
-Program was used to create database Schemas for ski resorts via Mongoose and instances were posted to a MongoDB cloud instance using Express for Restful API calls
+Program was used to create a database schema for ski resorts via Mongoose and instances were posted to a MongoDB cloud instance using Express for Restful API calls
 
 ## Tools
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) Cloud instance of ski resort database
