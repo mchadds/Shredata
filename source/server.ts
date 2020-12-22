@@ -29,6 +29,8 @@ router.use((req, res, next) => {
          STATUS - [${req.statusCode}]`
         );
     });
+
+    next();
 });
 
 // parse the body of the request by injecting bodyParser
@@ -54,6 +56,8 @@ router.use((req, res, next) => {
         // returns a response of 200 which means that the method was accepted
         res.status(200).json({});
     }
+
+    next();
 });
 
 /** Routes */
