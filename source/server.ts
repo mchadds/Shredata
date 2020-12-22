@@ -5,12 +5,23 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import logging from './config/logging';
 import config from './config/config';
-import sampleRoutes from './routes/sample';
+import mongoose from 'mongoose';
+import resortRoutes from './routes/resort';
 
 // NAMESPACE is used to determine where the logs are coming from
 const NAMESPACE = 'Server';
 // router defines api's behaviour
 const router = express();
+
+/** Connect to Mongo */
+mongoose
+    .connect(config.mongo.url, config.mongo.options)
+    .then((result) => {
+        logging.info(NAMESPACE, 'Connected to mongoDB!');
+    })
+    .catch((error) => {
+        logging.error(NAMESPACE, error.message, error);
+    });
 
 /** Logging the request*/
 // injecting middleware into router
@@ -63,7 +74,7 @@ router.use((req, res, next) => {
 
 /** Routes */
 // give routes a prefix = '/sample'
-router.use('/sample', sampleRoutes);
+router.use('/api/resorts', resortRoutes);
 
 /** Error Handling */
 router.use((req, res, next) => {
