@@ -6,12 +6,13 @@ import bodyParser from 'body-parser';
 import logging from './config/logging';
 import config from './config/config';
 import mongoose from 'mongoose';
-import resortRoutes from './routes/resort';
+import resortRoutes from './api/routes/resort';
+import snowReportRoutes from './api/routes/snowReport';
 
 // NAMESPACE is used to determine where the logs are coming from
 const NAMESPACE = 'Server';
 // router defines api's behaviour
-const router = express();
+const app = express();
 
 /** Connect to Mongo */
 mongoose
@@ -27,7 +28,7 @@ mongoose
 // injecting middleware into router
 // middleware is a function that allows you to modify the request, read it, or do something
 // with the data that is being passed and sent in
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     logging.info(NAMESPACE, `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`);
 
     // accessing response through middleware
@@ -47,16 +48,16 @@ router.use((req, res, next) => {
 
 // parse the body of the request by injecting bodyParser
 /** Parse the request */
-router.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 // allows to send json to nested api and using the parsing functionality of bodyParser
-router.use(bodyParser.json());
+app.use(bodyParser.json());
 
 /** Define rules of API
  * What kind of requests can be made (GET, POST, DELETE)
  * What kind of headers are allowed
  * Where the requests can come from
  */
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     // new piece of middleware
     // for now requests can come from anywhere - do not use this setting for a production api
     res.header('Access-Control-Allow-Origin', '*');
@@ -74,10 +75,11 @@ router.use((req, res, next) => {
 
 /** Routes */
 // give routes a prefix = '/sample'
-router.use('/api/resorts', resortRoutes);
+app.use('/api/resorts', resortRoutes);
+app.use('/api/snowReports', snowReportRoutes);
 
 /** Error Handling */
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     const error = new Error('not found');
 
     return res.status(404).json({
@@ -86,7 +88,7 @@ router.use((req, res, next) => {
 });
 
 /** Create the server */
-const httpServer = http.createServer(router);
+const httpServer = http.createServer(app);
 httpServer.listen(config.server.port, () =>
     logging.info(
         NAMESPACE,
@@ -94,3 +96,5 @@ httpServer.listen(config.server.port, () =>
 ${config.server.hostname}:${config.server.port}`
     )
 );
+
+export default app;

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
-import Resort from '../models/resort';
+import Resort from '../../models/resort';
 //import logging from '../config/logging';
 
 // define namespace for sample controller
