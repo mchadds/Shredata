@@ -14,6 +14,7 @@ logging.config.dictConfig({
     'version': 1,
     'disable_existing_loggers': True
 })
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
 
 def mongoConnection():
@@ -26,8 +27,9 @@ def mongoConnection():
     log.info('connected to mongo')
     return skiDb,skiClient,snowTable
 
-def toMongo(df,table):
-    df = df.to_dict('records')[0]
+def toMongo(df,table,dtype='df'):
+    if dtype == 'df':
+        df = df.to_dict('records')[0]
     table.insert_one(df)
 
 def configureLog(file_name):
@@ -148,21 +150,121 @@ def lake_louise(table=False):
             log.critical(e,exc_info=True)
     return df
 
+def revelstoke(db_table):
+    url = 'https://www.revelstokemountainresort.com/conditions/printable-avalanche-report'
+    r = requests.get(url,headers=headers)
+    if r.status_code == 200:
+        try:
+            soup = BeautifulSoup(r.text, 'html.parser')
+            table = soup.find(class_="snow-report-table")
+            date = soup.find(class_="timestamp futurabold").text
+            date = ",".join(date.split("-")[-1].split(',')[1:])
+            date = pd.to_datetime(date.strip())
+            df = pd.read_html(str(table))[0]
+            df.columns = df.iloc[0]
+            df = df[1:]
+            df = df[~df['Base Depth'].isnull()]
+            df = df[:1]
+            df = df[['New Snow (reset at 3pm)', '24h Snow', '7 Day Snow', 'Season Total','Base Depth']]
+            for col in df.columns:
+                df[col] = [int(x.replace('cm','').strip()) for x in df[col]]
+            df = df.rename(columns={'24h Snow':'past24Hours','7 Day Snow':'past7Days','Season Total':'seasonTotal','Base Depth':'base'})
+            values = {}
+            for col in df.columns:
+                values[col] = list(df[col])[0]
+            
+            processed = {}
+            processed['unit'] = 'metric'
+            processed['updateTime'] = date
+            processed['Resort Name'] = "Revelstoke"
+            processed['values'] = values
+            log.info('pulled revelstoke data')
+            if db_table != False:
+                try:
+                    toMongo(processed,db_table,'dict')
+                    log.info('Wrote revelstoke to mongo')
+                except pymongo.errors.DuplicateKeyError:
+                    log.warning('revelstoke data already in database today')
+                except Exception as e:
+                    log.critical(e,exc_info=True)
+        except Exception as e:
+            processed = None
+            log.critical(e,exc_info=True)
+    else:
+        log.error('cant connect to revelstoke website. Error Code: '+str(r.status_code))
+            
+    return processed
+
+def panorama(table):
+    url = 'https://www.panoramaresort.com/panorama-today/daily-snow-report/'
+    r = requests.get(url,headers=headers)
+    if r.status_code == 200:
+        soup = BeautifulSoup(r.text, 'html.parser')
+        report = soup.find_all(class_="grid-x grid-margin-x margin-bottom-1")
+        time = soup.find_all("h5",class_="margin-bottom-2")
+        for t in time:
+            if "Updated" in t.text.strip():
+                formatted_time = t.text.strip()
+                formatted_time = formatted_time.replace('Updated at','').strip()
+                formatted_time = pd.to_datetime(formatted_time)
+            else:
+                formatted_time = None
+                
+        values = report[-1].find_all(class_="small-4 cell summary-facilities__stat margin-bottom-1")
+        processed_values = {}
+        for v in values:
+            key = v.find(class_='xsmall text-uppercase lspace').text.strip()
+            value = v.find(class_='margin-bottom-0').text.strip()
+            processed_values[key] = int(value.replace('cm',''))
+            
+        new_keys = {'Overnight':'overnight',
+                    '24 Hours':'past24Hours',
+                    '48 Hours':'past48Hours',
+                    '7 Days':'past7Days',
+                    'Season':'seasonTotal'}
+        processed_values = replace_keys(processed_values, new_keys)
+        processed = {}
+        processed['Resort Name'] = "Panorama"
+        processed['unit'] = 'metric'
+        processed['values'] = processed_values
+        processed['updateTime'] = formatted_time
+        if table != False:
+            try:
+                toMongo(processed,table,'dict')
+                log.info('Wrote panorama to mongo')
+            except pymongo.errors.DuplicateKeyError:
+                log.warning('sunshine data already in database today')
+            except Exception as e:
+                log.critical(e,exc_info=True)
+    return processed
+
 
 def scheduled_resorts():
     skiDb,skiClient,snowTable = mongoConnection()
     louise = lake_louise(snowTable)
     sunshine = get_sunshine(snowTable)
+    rev = revelstoke(snowTable)
+    pan = panorama(snowTable)
     skiClient.close()
     logging.shutdown()
     
+def existing_resorts():
+    skiDb,skiClient,snowTable = mongoConnection()
+    print(skiDb.list_collection_names())
+    resorts = skiDb['resorts']
+    all_resorts = resorts.find({})
+    for r in all_resorts:
+        print(r)
+    skiClient.close()
+    
 
-if __name__ == "__main__":
+if __name__ == "__main__":    
     print('starting scheduled resorts')
     schedule.every().day.at("07:00").do(scheduled_resorts)
     while True:
         schedule.run_pending()
         time.sleep(1)
     
-        
+#%%
+
     
