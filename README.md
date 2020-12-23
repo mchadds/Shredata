@@ -7,4 +7,4 @@ The purpose of the project is to put a BI spin on snow reports for ski resorts, 
 - [AWS](https://aws.amazon.com/) Cloud provider
 - [Node.js](https://nodejs.org/en/) JavaScript runtime environment
 - [Express.js](https://expressjs.com/) Framework for API
-- [Mongoose.js](https://mongoosejs.com/) Datbase schemas
+- [Mongoose.js](https://mongoosejs.com/) Database schemas
