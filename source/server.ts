@@ -6,8 +6,8 @@ import bodyParser from 'body-parser';
 import logging from './config/logging';
 import config from './config/config';
 import mongoose from 'mongoose';
-import resortRoutes from './routes/resort';
-import snowReportRoutes from './routes/snowReport';
+import resortRoutes from './api/routes/resort';
+import snowReportRoutes from './api/routes/snowReport';
 
 // NAMESPACE is used to determine where the logs are coming from
 const NAMESPACE = 'Server';
