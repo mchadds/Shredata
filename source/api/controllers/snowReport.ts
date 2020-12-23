@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
-import SnowReport from '../models/snowReport';
+import SnowReport from '../../models/snowReport';
 //import Resort from '../models/resort';
 //import logging from '../config/logging';
 
