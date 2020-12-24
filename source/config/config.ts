@@ -31,6 +31,7 @@ const MONGO = {
     options: MONGO_OPTIONS,
     url: `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}`
     //  url: `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@clusterskireport.o0o97.mongodb.net/<dbname>?retryWrites=true&w=majority`
+    //"mongodb+srv://skier_358:h1tTh3Sl0p35@clusterskireport.o0o97.mongodb.net/<Shredata>?retryWrites=true&w=majority"
 };
 
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';
@@ -46,7 +47,8 @@ const SERVER = {
 // assign a server key to the SERVER const we created above
 const config = {
     mongo: MONGO,
-    server: SERVER
+    server: SERVER,
+    database: 'Shredata'
 };
 
 // allows access to all the variables defined in the file from other locations (files)

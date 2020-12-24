@@ -9,26 +9,51 @@ import mongoose from 'mongoose';
 import resortRoutes from './api/routes/resort';
 import snowReportRoutes from './api/routes/snowReport';
 
+import { MongoClient } from 'mongodb';
+import ResortsDAO from './dao/resortsDAO';
+import SnowReportsDAO from './dao/snowReportsDAO';
+
 // NAMESPACE is used to determine where the logs are coming from
 const NAMESPACE = 'Server';
 // router defines api's behaviour
-const router = express();
+const app = express();
 
 /** Connect to Mongo */
-mongoose
-    .connect(config.mongo.url, config.mongo.options)
-    .then((result) => {
-        logging.info(NAMESPACE, 'Connected to mongoDB!');
+// mongoose
+//     .connect(config.mongo.url, config.mongo.options)
+//     .then((result) => {
+//         logging.info(NAMESPACE, 'Connected to mongoDB!');
+//     })
+//     .catch((error) => {
+//         logging.error(NAMESPACE, error.message, error);
+//     });
+
+MongoClient.connect(
+    config.mongo.url,
+    // TODO: Connection Pooling
+    // Set the poolSize to 50 connections.
+    // TODO: Timeouts
+    // Set the write timeout limit to 2500 milliseconds.
+    { useNewUrlParser: true, poolSize: 50, wtimeout: 2500, useUnifiedTopology: true }
+)
+    .catch((err) => {
+        console.error(err.stack);
+        process.exit(1);
     })
-    .catch((error) => {
-        logging.error(NAMESPACE, error.message, error);
+    .then(async (client) => {
+        await ResortsDAO.injectDB(client);
+        await SnowReportsDAO.injectDB(client);
+
+        app.listen(config.server.port, () => {
+            console.log(`listening on port ${config.server.port}`);
+        });
     });
 
 /** Logging the request*/
 // injecting middleware into router
 // middleware is a function that allows you to modify the request, read it, or do something
 // with the data that is being passed and sent in
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     logging.info(NAMESPACE, `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`);
 
     // accessing response through middleware
@@ -48,16 +73,16 @@ router.use((req, res, next) => {
 
 // parse the body of the request by injecting bodyParser
 /** Parse the request */
-router.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 // allows to send json to nested api and using the parsing functionality of bodyParser
-router.use(bodyParser.json());
+app.use(bodyParser.json());
 
 /** Define rules of API
  * What kind of requests can be made (GET, POST, DELETE)
  * What kind of headers are allowed
  * Where the requests can come from
  */
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     // new piece of middleware
     // for now requests can come from anywhere - do not use this setting for a production api
     res.header('Access-Control-Allow-Origin', '*');
@@ -75,11 +100,11 @@ router.use((req, res, next) => {
 
 /** Routes */
 // give routes a prefix = '/sample'
-router.use('/api/resorts', resortRoutes);
-router.use('/api/snowReports', snowReportRoutes);
+app.use('/api/resorts', resortRoutes);
+app.use('/api/snowReports', snowReportRoutes);
 
 /** Error Handling */
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     const error = new Error('not found');
 
     return res.status(404).json({
@@ -88,11 +113,13 @@ router.use((req, res, next) => {
 });
 
 /** Create the server */
-const httpServer = http.createServer(router);
-httpServer.listen(config.server.port, () =>
-    logging.info(
-        NAMESPACE,
-        `Server running on
-${config.server.hostname}:${config.server.port}`
-    )
-);
+// const httpServer = http.createServer(app);
+// httpServer.listen(config.server.port, () =>
+//     logging.info(
+//         NAMESPACE,
+//         `Server running on
+// ${config.server.hostname}:${config.server.port}`
+//     )
+// );
+
+export default app;
