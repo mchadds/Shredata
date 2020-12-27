@@ -2,7 +2,7 @@
     "name": "nodejs-express-typescript-restfulapi",
     "version": "1.0.0",
     "description": "Basic restful api service using Node.JS, Express, and TypeScript",
-    "main": "source/server.ts",
+    "main": "source/index.ts",
     "scripts": {
         "build": "rm -rf build/ && prettier --write source/ && tsc",
         "test": "jest"
