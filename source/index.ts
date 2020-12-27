@@ -2,6 +2,7 @@ import { MongoClient } from 'mongodb';
 import ResortsDAO from './dao/resortsDAO';
 import SnowReportsDAO from './dao/snowReportsDAO';
 import config from './config/config';
+import app from './server';
 
 MongoClient.connect(config.mongo.url, { useNewUrlParser: true, poolSize: 50, wtimeout: 2500, useUnifiedTopology: true })
     .catch((err) => {
