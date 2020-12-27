@@ -36,19 +36,19 @@ export default class ResortsDAO {
     }
 
     /**
-     * Finds and returns movies by country.
-     * Returns a list of objects, each object contains a title and an _id.
+     * Finds and returns resorts .
+     * Returns a list of objects (resorts).
      * @param {Object} filters - The search parameters to use in the query.
-     * @param {number} page - The page of movies to retrieve.
-     * @param {number} resortsPerPage - The number of movies to display per page.
+     * @param {number} page - The page of resorts to retrieve.
+     * @param {number} resortsPerPage - The number of resorts to display per page.
      * @returns {GetResortsResult} An object with movie results and total results
      * that would match this query
      */
     static async getResorts({
-        // here's where the default parameters are set for the getMovies method
+        // here's where the default parameters are set for the getResorts method
         //filters = null,
         //page = 0,
-        //moviesPerPage = 20
+        //resortsPerPage = 20
     } = {}) {
         let queryParams: any = {};
         // if (filters) {
@@ -82,25 +82,13 @@ export default class ResortsDAO {
     }
 
     /**
-     * Gets a movie by its id
-     * @param {string} id - The desired movie id, the _id in Mongo
-     * @returns {MflixMovie | null} Returns either a single movie or nothing
+     * Gets resorts with their most recent snow report
+     * @returns {SkiResort | null} Returns either a single movie or nothing
      */
     static async getResortsSnowReport() {
         let cursor;
         try {
-            /**
-      Ticket: Get Comments
-
-      Given a movie ID, build an Aggregation Pipeline to retrieve the comments
-      matching that movie's ID.
-
-      The $match stage is already completed. You will need to add a $lookup
-      stage that searches the `comments` collection for the correct comments.
-      */
-
-            // TODO Ticket: Get Comments
-            // Implement the required pipeline.
+            // pipeline used to retrieve each resort with it's most recent snow report
             const pipeline = [
                 {
                     $lookup: {
@@ -139,23 +127,14 @@ export default class ResortsDAO {
                 }
             ];
             cursor = await resorts.aggregate(pipeline);
-            //return await resorts.aggregate(pipeline).next();
         } catch (e) {
-            /**
-      Ticket: Error Handling
-
-      Handle the error that occurs when an invalid ID is passed to this method.
-      When this specific error is thrown, the method should return `null`.
-      */
             if (
                 String(e).startsWith('MongoError: E11000 duplicate key error') ||
                 String(e).startsWith('Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters')
             ) {
                 return null;
             }
-            // TODO Ticket: Error Handling
-            // Catch the InvalidId error by string matching, and then handle it.
-            console.error(`Something went wrong in getMovieByID: ${e}`);
+            console.error(`Something went wrong in getResortsSnowReport: ${e}`);
             throw e;
         }
         try {

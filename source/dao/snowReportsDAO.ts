@@ -16,17 +16,16 @@ export default class SnowReportsDAO {
         }
     }
 
-    /**
-     * Finds and returns movies by country.
-     * Returns a list of objects, each object contains a title and an _id.
+    /**.
+     * Returns all snow reports
      * @param {Object} filters - The search parameters to use in the query.
-     * @param {number} page - The page of movies to retrieve.
-     * @param {number} snowReportsPerPage - The number of movies to display per page.
-     * @returns {GetResortsResult} An object with movie results and total results
+     * @param {number} page - The page of snow reports to retrieve.
+     * @param {number} snowReportsPerPage - The number of snow reports to display per page.
+     * @returns {GetSnowReportsResult} An object with snow reports results and total results
      * that would match this query
      */
     static async getSnowReports({
-        // here's where the default parameters are set for the getMovies method
+        // here's where the default parameters are set for the getSnowReports method
         //filters = null,
         //page = 0,
         //moviesPerPage = 20

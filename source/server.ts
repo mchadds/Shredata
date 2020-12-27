@@ -18,24 +18,7 @@ const NAMESPACE = 'Server';
 // router defines api's behaviour
 const app = express();
 
-/** Connect to Mongo */
-// mongoose
-//     .connect(config.mongo.url, config.mongo.options)
-//     .then((result) => {
-//         logging.info(NAMESPACE, 'Connected to mongoDB!');
-//     })
-//     .catch((error) => {
-//         logging.error(NAMESPACE, error.message, error);
-//     });
-
-MongoClient.connect(
-    config.mongo.url,
-    // TODO: Connection Pooling
-    // Set the poolSize to 50 connections.
-    // TODO: Timeouts
-    // Set the write timeout limit to 2500 milliseconds.
-    { useNewUrlParser: true, poolSize: 50, wtimeout: 2500, useUnifiedTopology: true }
-)
+MongoClient.connect(config.mongo.url, { useNewUrlParser: true, poolSize: 50, wtimeout: 2500, useUnifiedTopology: true })
     .catch((err) => {
         console.error(err.stack);
         process.exit(1);
@@ -111,6 +94,16 @@ app.use((req, res, next) => {
         message: error.message
     });
 });
+
+/** Connect to Mongo */
+// mongoose
+//     .connect(config.mongo.url, config.mongo.options)
+//     .then((result) => {
+//         logging.info(NAMESPACE, 'Connected to mongoDB!');
+//     })
+//     .catch((error) => {
+//         logging.error(NAMESPACE, error.message, error);
+//     });
 
 /** Create the server */
 // const httpServer = http.createServer(app);
