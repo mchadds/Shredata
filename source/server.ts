@@ -18,20 +18,6 @@ const NAMESPACE = 'Server';
 // router defines api's behaviour
 const app = express();
 
-MongoClient.connect(config.mongo.url, { useNewUrlParser: true, poolSize: 50, wtimeout: 2500, useUnifiedTopology: true })
-    .catch((err) => {
-        console.error(err.stack);
-        process.exit(1);
-    })
-    .then(async (client) => {
-        await ResortsDAO.injectDB(client);
-        await SnowReportsDAO.injectDB(client);
-
-        app.listen(config.server.port, () => {
-            console.log(`listening on port ${config.server.port}`);
-        });
-    });
-
 /** Logging the request*/
 // injecting middleware into router
 // middleware is a function that allows you to modify the request, read it, or do something
