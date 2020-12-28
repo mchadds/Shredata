@@ -52,7 +52,7 @@ export default class SnowReportsDAO {
         try {
             const snowReportsList = await cursor.toArray();
             const totalNumSnowReports = await snowReports.countDocuments(query);
-            //return 'Testing api call';
+
             return { snowReportsList, totalNumSnowReports };
         } catch (e) {
             console.error(`Unable to convert cursor to array or problem counting documents, ${e}`);
