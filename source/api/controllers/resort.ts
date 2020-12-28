@@ -42,7 +42,9 @@ export default class ResortsController {
             filters: {},
             total_results: totalNumResorts
         };
-        res.json(response);
+        //res.json(response);
+        //res.json('Testing api');
+        res.send({ express: 'Testing api' });
     }
 }
 
