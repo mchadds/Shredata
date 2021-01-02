@@ -7,14 +7,29 @@ import { TileLayer, Marker, Popup, MapContainer } from 'react-leaflet';
 
 class App extends Component {
     state = {
-        response: '',
+        response: {
+            resorts: [
+                {
+                    _id: 0,
+                    latitude: 0,
+                    longitude: 0,
+                    snowreport: {
+                        values: {
+                            past24Hours: 0,
+                            past48Hours: 0,
+                            past7Days: 0
+                        }
+                    }
+                }
+            ]
+        },
         post: '',
         responseToPost: ''
     };
 
     componentDidMount() {
         this.callApi()
-            .then((res) => this.setState({ response: res.express }))
+            .then((res) => this.setState({ response: res }))
             .catch((err) => console.log(err));
     }
 
@@ -62,13 +77,16 @@ class App extends Component {
                 </form>
                 <p>{this.state.responseToPost}</p> */}
 
-                <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+                <MapContainer center={[50.82793, -116.84341]} zoom={8} scrollWheelZoom={false}>
                     <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                    <Marker position={[51.505, -0.09]}>
-                        <Popup>
-                            A pretty CSS3 popup. <br /> Easily customizable.
-                        </Popup>
-                    </Marker>
+                    {this.state.response.resorts.map((resort) => (
+                        <Marker position={[resort.latitude, resort.longitude]}>
+                            <Popup>
+                                {resort._id} <br /> Snowfall: <br /> Past 24 Hours: {resort.snowreport.values.past24Hours} cm <br /> Past 48 Hrs: {resort.snowreport.values.past48Hours} cm <br /> Past
+                                7 Days: {resort.snowreport.values.past7Days} cm
+                            </Popup>
+                        </Marker>
+                    ))}
                 </MapContainer>
             </div>
         );
