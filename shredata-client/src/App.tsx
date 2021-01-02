@@ -3,17 +3,33 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 
 import './App.css';
+import { TileLayer, Marker, Popup, MapContainer } from 'react-leaflet';
 
 class App extends Component {
     state = {
-        response: '',
+        response: {
+            resorts: [
+                {
+                    _id: 0,
+                    latitude: 0,
+                    longitude: 0,
+                    snowreport: {
+                        values: {
+                            past24Hours: 0,
+                            past48Hours: 0,
+                            past7Days: 0
+                        }
+                    }
+                }
+            ]
+        },
         post: '',
         responseToPost: ''
     };
 
     componentDidMount() {
         this.callApi()
-            .then((res) => this.setState({ response: res.express }))
+            .then((res) => this.setState({ response: res }))
             .catch((err) => console.log(err));
     }
 
@@ -42,7 +58,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <header className="App-header">
+                {/* <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     <p>
                         Edit <code>src/App.js</code> and save to reload.
@@ -59,7 +75,19 @@ class App extends Component {
                     <input type="text" value={this.state.post} onChange={(e) => this.setState({ post: e.target.value })} />
                     <button type="submit">Submit</button>
                 </form>
-                <p>{this.state.responseToPost}</p>
+                <p>{this.state.responseToPost}</p> */}
+
+                <MapContainer center={[50.82793, -116.84341]} zoom={8} scrollWheelZoom={false}>
+                    <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                    {this.state.response.resorts.map((resort) => (
+                        <Marker position={[resort.latitude, resort.longitude]}>
+                            <Popup>
+                                {resort._id} <br /> Snowfall: <br /> Past 24 Hours: {resort.snowreport.values.past24Hours} cm <br /> Past 48 Hrs: {resort.snowreport.values.past48Hours} cm <br /> Past
+                                7 Days: {resort.snowreport.values.past7Days} cm
+                            </Popup>
+                        </Marker>
+                    ))}
+                </MapContainer>
             </div>
         );
     }

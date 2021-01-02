@@ -2,6 +2,11 @@
     text-align: center;
 }
 
+.leaflet-container {
+    width: 80%;
+    height: 80vh;
+}
+
 .App-logo {
     height: 40vmin;
     pointer-events: none;
