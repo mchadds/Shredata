@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 
 import './App.css';
+import { TileLayer, Marker, Popup, MapContainer } from 'react-leaflet';
 
 class App extends Component {
     state = {
@@ -42,7 +43,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <header className="App-header">
+                {/* <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     <p>
                         Edit <code>src/App.js</code> and save to reload.
@@ -59,7 +60,16 @@ class App extends Component {
                     <input type="text" value={this.state.post} onChange={(e) => this.setState({ post: e.target.value })} />
                     <button type="submit">Submit</button>
                 </form>
-                <p>{this.state.responseToPost}</p>
+                <p>{this.state.responseToPost}</p> */}
+
+                <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+                    <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                    <Marker position={[51.505, -0.09]}>
+                        <Popup>
+                            A pretty CSS3 popup. <br /> Easily customizable.
+                        </Popup>
+                    </Marker>
+                </MapContainer>
             </div>
         );
     }
