@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 
 import './App.css';
-import { TileLayer, Marker, Popup, MapContainer } from 'react-leaflet';
+import { TileLayer, Marker, CircleMarker, Popup, MapContainer } from 'react-leaflet';
 
 class App extends Component {
     state = {
@@ -80,12 +80,12 @@ class App extends Component {
                 <MapContainer center={[50.82793, -116.84341]} zoom={8} scrollWheelZoom={false}>
                     <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                     {this.state.response.resorts.map((resort) => (
-                        <Marker position={[resort.latitude, resort.longitude]}>
+                        <CircleMarker center={[resort.latitude, resort.longitude]} radius={10 + resort.snowreport.values.past24Hours / 1.4} fillOpacity={0.5} stroke={false}>
                             <Popup>
                                 {resort._id} <br /> Snowfall: <br /> Past 24 Hours: {resort.snowreport.values.past24Hours} cm <br /> Past 48 Hrs: {resort.snowreport.values.past48Hours} cm <br /> Past
                                 7 Days: {resort.snowreport.values.past7Days} cm
                             </Popup>
-                        </Marker>
+                        </CircleMarker>
                     ))}
                 </MapContainer>
             </div>
