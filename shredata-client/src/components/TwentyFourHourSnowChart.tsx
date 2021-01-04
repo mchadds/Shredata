@@ -10,6 +10,33 @@ class TwentyFourHourSnowChart extends Component {
     // namespace for the related Props interface (HighchartsReact.Props). All other
     // interfaces like Options come from the Highcharts module itself.
 
+    constructor(
+        props: any
+        //  {
+        //     resorts: [
+        //         {
+        //             _id: 0,
+        //             latitude: 0,
+        //             longitude: 0,
+        //             snowreport: {
+        //                 values: {
+        //                     past24Hours: 0,
+        //                     past48Hours: 0,
+        //                     past7Days: 0
+        //                 }
+        //             }
+        //         }
+        //     ]
+        // }
+    ) {
+        super(props);
+        this.props = props;
+    }
+    // componentDidMount() {
+    //     // example of use
+    //     this.internalChart.addSeries({ data: [1, 2, 3] })
+    //   }
+
     props = {
         resorts: [
             {
@@ -27,55 +54,81 @@ class TwentyFourHourSnowChart extends Component {
         ]
     };
 
-    // create24HourSnowfallSeries = () => {
-    //     seriesTest: Highcharts.Series;
+    create24HourSnowfallSeries(resorts: any) {
+        const seriesTestData: [{}] = [{}];
+        var obj = {};
+        console.log(this.props);
+        resorts.map((resort: { _id: any; snowreport: { values: { past24Hours: any } } }) => {
+            console.log(resort);
+            obj = {
+                name: resort._id,
+                y: resort.snowreport.values.past24Hours
+            };
 
-    //     this.props.resorts.forEach(resort => (
-    //         resortSnow: {
-    //             name:
+            seriesTestData.push(obj);
+        });
+        // "..." is the spread operator that clones the object
+        //const counters = [...this.state.counters];
+        console.log(seriesTestData);
+        return seriesTestData;
+    }
+
+    // options: Highcharts.Options = {
+    //     title: {
+    //         text: 'Past 24 Hours Snowfall'
+    //     },
+    //     plotOptions: {
+    //         column: {
+    //             stacking: 'normal'
     //         }
-    //     ));
-    //     // "..." is the spread operator that clones the object
-    //     const counters = [...this.state.counters];
-    //     let i = 0;
-    //     counters.forEach(c => i+= c.value);
-    //     return i;
-    //   }
+    //     },
 
-    options: Highcharts.Options = {
-        title: {
-            text: 'Past 24 Hours Snowfall'
-        },
-        plotOptions: {
-            column: {
-                stacking: 'normal'
-            }
-        },
-
-        series: [
-            {
-                type: 'column',
-                name: 'Snowfall',
-                data: [
-                    { name: 'one', y: 1 },
-                    { name: 'two', y: 2 }
-                ]
-            },
-            {
-                type: 'column',
-                name: 'Snowfall 2',
-                data: [
-                    { name: 'one', y: 1 },
-                    { name: 'two', y: 2 }
-                ]
-            }
-        ]
-    };
+    //     series: [
+    //         {
+    //             type: 'column',
+    //             name: 'Snowfall',
+    //             data: this.create24HourSnowfallSeries()
+    //         }
+    //         // {
+    //         //     type: 'column',
+    //         //     name: 'Snowfall 2',
+    //         //     data: [
+    //         //         { name: 'one', y: 1 },
+    //         //         { name: 'two', y: 2 }
+    //         //     ]
+    //         // }
+    //     ]
+    // };
 
     render() {
+        const { resorts } = this.props;
+        console.log(this.props);
         return (
             <div>
-                <HighchartsReact highcharts={Highcharts} options={this.options} {...this.props} />
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    //options={{...this.options}}
+
+                    options={{
+                        title: {
+                            text: 'Past 24 Hours Snowfall'
+                        },
+                        plotOptions: {
+                            column: {
+                                stacking: 'normal'
+                            }
+                        },
+
+                        series: [
+                            {
+                                type: 'column',
+                                name: 'Snowfall',
+                                data: this.create24HourSnowfallSeries(resorts)
+                            }
+                        ]
+                    }}
+                    {...this.props}
+                />
             </div>
         );
     }

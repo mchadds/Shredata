@@ -16,6 +16,29 @@ class Map extends Component {
     //     console.log('Counter - Unmount');
     //   }
 
+    constructor(
+        props: any
+        //  {
+        //     resorts: [
+        //         {
+        //             _id: 0,
+        //             latitude: 0,
+        //             longitude: 0,
+        //             snowreport: {
+        //                 values: {
+        //                     past24Hours: 0,
+        //                     past48Hours: 0,
+        //                     past7Days: 0
+        //                 }
+        //             }
+        //         }
+        //     ]
+        // }
+    ) {
+        super(props);
+        this.props = props;
+    }
+
     props = {
         resorts: [
             {
@@ -34,12 +57,13 @@ class Map extends Component {
     };
 
     render() {
+        const { resorts } = this.props;
         return (
             <div>
                 <MapContainer center={[50.82793, -116.84341]} zoom={8} scrollWheelZoom={false}>
                     <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                    {this.props.resorts.map((resort) => (
-                        <CircleMarker center={[resort.latitude, resort.longitude]} radius={10 + resort.snowreport.values.past24Hours / 1.4} fillOpacity={0.5} stroke={false}>
+                    {resorts.map((resort) => (
+                        <CircleMarker key={resort._id} center={[resort.latitude, resort.longitude]} radius={10 + resort.snowreport.values.past24Hours / 1.4} fillOpacity={0.5} stroke={false}>
                             <Popup>
                                 {resort._id} <br /> Snowfall: <br /> Past 24 Hours: {resort.snowreport.values.past24Hours} cm <br /> Past 48 Hrs: {resort.snowreport.values.past48Hours} cm <br /> Past
                                 7 Days: {resort.snowreport.values.past7Days} cm
