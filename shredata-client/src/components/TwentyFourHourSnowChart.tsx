@@ -59,22 +59,20 @@ class TwentyFourHourSnowChart extends Component {
     };
 
     create24HourSnowfallSeries(resorts: any) {
-        const seriesTestData: [{}] = [{}];
-        var obj = {};
+        const series24HourData: [{}] = [{}];
+        var resort24Hour = {};
         console.log(this.props);
         resorts.map((resort: { _id: any; snowreport: { values: { past24Hours: any } } }) => {
             console.log(resort);
-            obj = {
+            resort24Hour = {
                 name: resort._id,
                 y: resort.snowreport.values.past24Hours
             };
 
-            seriesTestData.push(obj);
+            series24HourData.push(resort24Hour);
         });
-        // "..." is the spread operator that clones the object
-        //const counters = [...this.state.counters];
-        console.log(seriesTestData);
-        return seriesTestData;
+        console.log(series24HourData);
+        return series24HourData;
     }
 
     createHighChartOptions(resorts: any) {
@@ -94,9 +92,9 @@ class TwentyFourHourSnowChart extends Component {
                     }
                 }
             },
-            // tooltip: {
-            //     pointFormat: '<span></span'
-            // },
+            tooltip: {
+                pointFormat: '<span>Snowfall</span>: <b>{point.y} cm</b>'
+            },
             xAxis: {
                 type: 'category',
                 title: {
@@ -116,15 +114,7 @@ class TwentyFourHourSnowChart extends Component {
                     type: 'column',
                     name: 'Snowfall',
                     data: this.create24HourSnowfallSeries(resorts)
-                } //,
-                // {
-                //     type: 'column',
-                //     name: 'Snowfall 2',
-                //     data: [
-                //         { name: 'one', y: 1, label: },
-                //         { name: 'two', y: 2 }
-                //     ]
-                // }
+                }
             ],
             legend: {
                 enabled: false
@@ -138,30 +128,8 @@ class TwentyFourHourSnowChart extends Component {
         this.options = this.createHighChartOptions(resorts);
         console.log(this.props);
         return (
-            <div>
-                <HighchartsReact
-                    highcharts={Highcharts}
-                    options={{ ...this.options }}
-                    // options={{
-                    //     title: {
-                    //         text: 'Past 24 Hours Snowfall'
-                    //     },
-                    //     plotOptions: {
-                    //         column: {
-                    //             stacking: 'normal'
-                    //         }
-                    //     },
-
-                    //     series: [
-                    //         {
-                    //             type: 'column',
-                    //             name: 'Snowfall',
-                    //             data: this.    create24HourSnowfallSeries(resorts)
-                    //         }
-                    //     ]
-                    // }}
-                    {...this.props}
-                />
+            <div style={{ width: '55%' }}>
+                <HighchartsReact highcharts={Highcharts} options={{ ...this.options }} {...this.props} />
             </div>
         );
     }
