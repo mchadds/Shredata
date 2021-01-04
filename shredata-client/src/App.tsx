@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-
-import logo from './logo.svg';
-
+import Map from './components/Map';
+import TwentyFourHourSnowChart from './components/TwentyFourHourSnowChart';
 import './App.css';
-import { TileLayer, Marker, Popup, MapContainer } from 'react-leaflet';
 
 class App extends Component {
     state = {
@@ -14,6 +12,7 @@ class App extends Component {
                     latitude: 0,
                     longitude: 0,
                     snowreport: {
+                        updateTime: Date.now() - 1,
                         values: {
                             past24Hours: 0,
                             past48Hours: 0,
@@ -57,7 +56,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App">
+            <React.Fragment>
                 {/* <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     <p>
@@ -77,20 +76,10 @@ class App extends Component {
                 </form>
                 <p>{this.state.responseToPost}</p> */}
 
-                <MapContainer center={[50.82793, -116.84341]} zoom={8} scrollWheelZoom={false}>
-                    <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                    {this.state.response.resorts.map((resort) => (
-                        <Marker position={[resort.latitude, resort.longitude]}>
-                            <Popup>
-                                {resort._id} <br /> Snowfall: <br /> Past 24 Hours: {resort.snowreport.values.past24Hours} cm <br /> Past 48 Hrs: {resort.snowreport.values.past48Hours} cm <br /> Past
-                                7 Days: {resort.snowreport.values.past7Days} cm
-                            </Popup>
-                        </Marker>
-                    ))}
-                </MapContainer>
-            </div>
+                <Map resorts={this.state.response.resorts} />
+                <TwentyFourHourSnowChart resorts={this.state.response.resorts} />
+            </React.Fragment>
         );
     }
 }
-
 export default App;
