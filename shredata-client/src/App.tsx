@@ -57,7 +57,6 @@ class App extends Component {
     };
 
     render() {
-        // const { response } = this.props;
         return (
             <React.Fragment>
                 {/* <header className="App-header">
@@ -79,10 +78,9 @@ class App extends Component {
                 </form>
                 <p>{this.state.responseToPost}</p> */}
 
-                <Map response={this.state.response} />
+                <Map resorts={this.state.response.resorts} />
             </React.Fragment>
         );
     }
 }
-// resorts={this.state.response.resorts}
 export default App;
