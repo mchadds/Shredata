@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Map from './components/Map';
 
 import logo from './logo.svg';
 
@@ -56,8 +57,9 @@ class App extends Component {
     };
 
     render() {
+        // const { response } = this.props;
         return (
-            <div className="App">
+            <React.Fragment>
                 {/* <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     <p>
@@ -77,7 +79,7 @@ class App extends Component {
                 </form>
                 <p>{this.state.responseToPost}</p> */}
 
-                <MapContainer center={[50.82793, -116.84341]} zoom={8} scrollWheelZoom={false}>
+                {/* <MapContainer center={[50.82793, -116.84341]} zoom={8} scrollWheelZoom={false}>
                     <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                     {this.state.response.resorts.map((resort) => (
                         <CircleMarker center={[resort.latitude, resort.longitude]} radius={10 + resort.snowreport.values.past24Hours / 1.4} fillOpacity={0.5} stroke={false}>
@@ -87,10 +89,11 @@ class App extends Component {
                             </Popup>
                         </CircleMarker>
                     ))}
-                </MapContainer>
-            </div>
+                </MapContainer> */}
+                <Map response={this.state.response} />
+            </React.Fragment>
         );
     }
 }
-
+// resorts={this.state.response.resorts}
 export default App;
