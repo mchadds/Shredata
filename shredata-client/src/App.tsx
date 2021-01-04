@@ -76,7 +76,7 @@ class App extends Component {
                 <p>{this.state.responseToPost}</p> */}
 
                 <Map resorts={this.state.response.resorts} />
-                <TwentyFourHourSnowChart />
+                <TwentyFourHourSnowChart resorts={this.state.response.resorts} />
             </React.Fragment>
         );
     }
