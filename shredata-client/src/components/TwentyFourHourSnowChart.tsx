@@ -6,12 +6,14 @@ import HighchartsReact from 'highcharts-react-official';
 import { ResolvedTypeReferenceDirectiveWithFailedLookupLocations } from 'typescript';
 
 class TwentyFourHourSnowChart extends Component {
+    options: Highcharts.Options;
     // The wrapper exports only a default component class that at the same time is a
     // namespace for the related Props interface (HighchartsReact.Props). All other
     // interfaces like Options come from the Highcharts module itself.
 
     constructor(
-        props: any
+        props: any,
+        options: Highcharts.Options
         //  {
         //     resorts: [
         //         {
@@ -29,8 +31,9 @@ class TwentyFourHourSnowChart extends Component {
         //     ]
         // }
     ) {
-        super(props);
+        super(props, options);
         this.props = props;
+        this.options = options;
     }
     // componentDidMount() {
     //     // example of use
@@ -44,6 +47,7 @@ class TwentyFourHourSnowChart extends Component {
                 latitude: 0,
                 longitude: 0,
                 snowreport: {
+                    updateTime: Date.now() - 1,
                     values: {
                         past24Hours: 0,
                         past48Hours: 0,
@@ -73,60 +77,89 @@ class TwentyFourHourSnowChart extends Component {
         return seriesTestData;
     }
 
-    // options: Highcharts.Options = {
-    //     title: {
-    //         text: 'Past 24 Hours Snowfall'
-    //     },
-    //     plotOptions: {
-    //         column: {
-    //             stacking: 'normal'
-    //         }
-    //     },
-
-    //     series: [
-    //         {
-    //             type: 'column',
-    //             name: 'Snowfall',
-    //             data: this.create24HourSnowfallSeries()
-    //         }
-    //         // {
-    //         //     type: 'column',
-    //         //     name: 'Snowfall 2',
-    //         //     data: [
-    //         //         { name: 'one', y: 1 },
-    //         //         { name: 'two', y: 2 }
-    //         //     ]
-    //         // }
-    //     ]
-    // };
+    createHighChartOptions(resorts: any) {
+        const options: Highcharts.Options = {
+            title: {
+                text: 'Past 24 Hours Snowfall'
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal'
+                },
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y} cm'
+                    }
+                }
+            },
+            // tooltip: {
+            //     pointFormat: '<span></span'
+            // },
+            xAxis: {
+                type: 'category',
+                title: {
+                    text: 'Resorts'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Snow'
+                },
+                labels: {
+                    format: '{value} cm'
+                }
+            },
+            series: [
+                {
+                    type: 'column',
+                    name: 'Snowfall',
+                    data: this.create24HourSnowfallSeries(resorts)
+                } //,
+                // {
+                //     type: 'column',
+                //     name: 'Snowfall 2',
+                //     data: [
+                //         { name: 'one', y: 1, label: },
+                //         { name: 'two', y: 2 }
+                //     ]
+                // }
+            ],
+            legend: {
+                enabled: false
+            }
+        };
+        return options;
+    }
 
     render() {
         const { resorts } = this.props;
+        this.options = this.createHighChartOptions(resorts);
         console.log(this.props);
         return (
             <div>
                 <HighchartsReact
                     highcharts={Highcharts}
-                    //options={{...this.options}}
+                    options={{ ...this.options }}
+                    // options={{
+                    //     title: {
+                    //         text: 'Past 24 Hours Snowfall'
+                    //     },
+                    //     plotOptions: {
+                    //         column: {
+                    //             stacking: 'normal'
+                    //         }
+                    //     },
 
-                    options={{
-                        title: {
-                            text: 'Past 24 Hours Snowfall'
-                        },
-                        plotOptions: {
-                            column: {
-                                stacking: 'normal'
-                            }
-                        },
-
-                        series: [
-                            {
-                                type: 'column',
-                                name: 'Snowfall',
-                                data: this.create24HourSnowfallSeries(resorts)
-                            }
-                        ]
-                    }}
+                    //     series: [
+                    //         {
+                    //             type: 'column',
+                    //             name: 'Snowfall',
+                    //             data: this.    create24HourSnowfallSeries(resorts)
+                    //         }
+                    //     ]
+                    // }}
                     {...this.props}
                 />
             </div>

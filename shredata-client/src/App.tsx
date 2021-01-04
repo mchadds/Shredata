@@ -12,6 +12,7 @@ class App extends Component {
                     latitude: 0,
                     longitude: 0,
                     snowreport: {
+                        updateTime: Date.now() - 1,
                         values: {
                             past24Hours: 0,
                             past48Hours: 0,

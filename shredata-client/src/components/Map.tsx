@@ -46,6 +46,7 @@ class Map extends Component {
                 latitude: 0,
                 longitude: 0,
                 snowreport: {
+                    updateTime: Date.now() - 1,
                     values: {
                         past24Hours: 0,
                         past48Hours: 0,
@@ -66,7 +67,7 @@ class Map extends Component {
                         <CircleMarker key={resort._id} center={[resort.latitude, resort.longitude]} radius={10 + resort.snowreport.values.past24Hours / 1.4} fillOpacity={0.5} stroke={false}>
                             <Popup>
                                 {resort._id} <br /> Snowfall: <br /> Past 24 Hours: {resort.snowreport.values.past24Hours} cm <br /> Past 48 Hrs: {resort.snowreport.values.past48Hours} cm <br /> Past
-                                7 Days: {resort.snowreport.values.past7Days} cm
+                                7 Days: {resort.snowreport.values.past7Days} cm <br /> Time of Recording: {resort.snowreport.updateTime}
                             </Popup>
                         </CircleMarker>
                     ))}
