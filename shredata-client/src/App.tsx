@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import Map from './components/Map';
-
-import logo from './logo.svg';
-
+import TwentyFourHourSnowChart from './components/TwentyFourHourSnowChart';
 import './App.css';
-import { TileLayer, Marker, CircleMarker, Popup, MapContainer } from 'react-leaflet';
 
 class App extends Component {
     state = {
@@ -79,6 +76,7 @@ class App extends Component {
                 <p>{this.state.responseToPost}</p> */}
 
                 <Map resorts={this.state.response.resorts} />
+                <TwentyFourHourSnowChart />
             </React.Fragment>
         );
     }
