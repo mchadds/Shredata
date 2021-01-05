@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Map from './components/Map';
 import TwentyFourHourSnowChart from './components/TwentyFourHourSnowChart';
+import FourtyEightHourSnowChart from './components/FourtyEightHourSnowChart';
+import SevenDaySnowChart from './components/SevenDaySnowChart';
+import IntervalSnowChartComparison from './components/IntervalSnowChartComparison';
 import './App.css';
 
 class App extends Component {
@@ -78,6 +81,9 @@ class App extends Component {
 
                 <Map resorts={this.state.response.resorts} />
                 <TwentyFourHourSnowChart resorts={this.state.response.resorts} />
+                <FourtyEightHourSnowChart resorts={this.state.response.resorts} />
+                <SevenDaySnowChart resorts={this.state.response.resorts} />
+                {/* <IntervalSnowChartComparison resorts={this.state.response.resorts} /> */}
             </React.Fragment>
         );
     }
