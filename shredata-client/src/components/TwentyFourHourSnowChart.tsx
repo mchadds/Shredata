@@ -101,7 +101,7 @@ class TwentyFourHourSnowChart extends Component {
         this.options = this.createHighChartOptions(resorts);
         console.log(this.props);
         return (
-            <div style={{ width: '55%' }}>
+            <div style={{ width: '30%' }}>
                 <HighchartsReact highcharts={Highcharts} options={{ ...this.options }} {...this.props} />
             </div>
         );

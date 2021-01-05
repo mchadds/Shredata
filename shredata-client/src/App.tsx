@@ -4,7 +4,9 @@ import TwentyFourHourSnowChart from './components/TwentyFourHourSnowChart';
 import FourtyEightHourSnowChart from './components/FourtyEightHourSnowChart';
 import SevenDaySnowChart from './components/SevenDaySnowChart';
 import IntervalSnowChartComparison from './components/IntervalSnowChartComparison';
+import IntervalDropDown from './components/IntervalDropDown';
 import './App.css';
+import { format } from 'highcharts';
 
 class App extends Component {
     state = {
@@ -78,12 +80,14 @@ class App extends Component {
                     <button type="submit">Submit</button>
                 </form>
                 <p>{this.state.responseToPost}</p> */}
-
-                <Map resorts={this.state.response.resorts} />
-                <TwentyFourHourSnowChart resorts={this.state.response.resorts} />
-                <FourtyEightHourSnowChart resorts={this.state.response.resorts} />
-                <SevenDaySnowChart resorts={this.state.response.resorts} />
-                {/* <IntervalSnowChartComparison resorts={this.state.response.resorts} /> */}
+                <main>
+                    <IntervalDropDown />
+                    <Map resorts={this.state.response.resorts} />
+                    <TwentyFourHourSnowChart resorts={this.state.response.resorts} />
+                    {/* <FourtyEightHourSnowChart resorts={this.state.response.resorts} /> */}
+                    {/* <SevenDaySnowChart resorts={this.state.response.resorts} /> */}
+                    {/* <IntervalSnowChartComparison resorts={this.state.response.resorts} /> */}
+                </main>
             </React.Fragment>
         );
     }

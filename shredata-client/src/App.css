@@ -2,9 +2,18 @@
     text-align: center;
 }
 
-.leaflet-container {
+.container {
+    height: 100%;
     width: 50%;
-    height: 50vh;
+    float: center;
+    /* width: 100%;
+    display: flex;
+    flex-wrap: wrap; */
+}
+
+.leaflet-container {
+    width: 30%;
+    height: 30vh;
 }
 
 .App-logo {
