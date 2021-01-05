@@ -40,20 +40,12 @@ class TwentyFourHourSnowChart extends Component {
     };
 
     create24HourSnowfallSeries(resorts: any) {
-        const series24HourData: [{}] = [{}];
-        var resort24Hour = {};
-        console.log(this.props);
-        resorts.map((resort: { _id: any; snowreport: { values: { past24Hours: any } } }) => {
-            console.log(resort);
-            resort24Hour = {
+        return resorts.map((resort: { _id: any; snowreport: { values: { past24Hours: any } } }) => {
+            return {
                 name: resort._id,
                 y: resort.snowreport.values.past24Hours
             };
-
-            series24HourData.push(resort24Hour);
         });
-        console.log(series24HourData);
-        return series24HourData;
     }
 
     createHighChartOptions(resorts: any) {

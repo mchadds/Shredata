@@ -40,59 +40,41 @@ class IntervalSnowChartComparison extends Component {
     };
 
     // create7DaySnowfallSeries(resorts: any) {
-    //     const series7DayData: [{}] = [{}];
-    //     var resort7Day = {};
-    //     resorts.map((resort: { _id: any; snowreport: { values: { past7Days: any } } }) => {
-    //         resort7Day = {
+    //     return resorts.map((resort: { _id: any; snowreport: { values: { past7Days: any } } }) => {
+    //         return {
     //             name: resort._id,
     //             y: resort.snowreport.values.past7Days
     //         };
-
-    //         series7DayData.push(resort7Day);
     //     });
-    //     console.log(series7DayData);
-    //     return series7DayData;
     // }
 
     // create48HourSnowfallSeries(resorts: any) {
-    //     const series48HourData: [{}] = [{}];
-    //     var resort48Hour = {};
-    //     resorts.map((resort: { _id: any; snowreport: { values: { past48Hours: any } } }) => {
-    //         resort48Hour = {
+    //     return resorts.map((resort: { _id: any; snowreport: { values: { past48Hours: any } } }) => {
+    //         return {
     //             name: resort._id,
     //             y: resort.snowreport.values.past48Hours
     //         };
-
-    //         series48HourData.push(resort48Hour);
     //     });
-    //     console.log(series48HourData);
-    //     return series48HourData;
     // }
 
     // create24HourSnowfallSeries(resorts: any) {
-    //     const series24HourData: [{}] = [{}];
-    //     var resort24Hour = {};
-    //     resorts.map((resort: { _id: any; snowreport: { values: { past24Hours: any } } }) => {
-    //         resort24Hour = {
+    //     return resorts.map((resort: { _id: any; snowreport: { values: { past24Hours: any } } }) => {
+    //         return {
     //             name: resort._id,
     //             y: resort.snowreport.values.past24Hours
     //         };
 
-    //         series24HourData.push(resort24Hour);
     //     });
-    //     console.log(series24HourData);
-    //     return series24HourData;
     // }
 
     createCategories(resorts: any) {
-        const seriesCategories: string[] = [];
-        var resortName = '';
-        resorts.map((resort: { _id: any }) => {
-            resortName = resort._id;
-
-            seriesCategories.push(resortName);
+        //const seriesCategories: string[] = [];
+        return resorts.map((resort: { _id: any }) => {
+            console.log('testtest', resort._id);
+            return resort._id;
+            //seriesCategories.push(resortName);
         });
-        return seriesCategories;
+        //return seriesCategories;
     }
 
     createSeriesSnowfallData(resorts: any) {
@@ -102,7 +84,7 @@ class IntervalSnowChartComparison extends Component {
             allResortsSnowfall = {
                 type: 'column',
                 name: resort._id,
-                data: [resort.snowreport.values.past24Hours, resort.snowreport.values.past48Hours, resort.snowreport.values.past7Days]
+                data: [resort.snowreport.values.past24Hours, resort.snowreport.values.past7Days]
             };
 
             seriesSnowfallData.push(allResortsSnowfall);

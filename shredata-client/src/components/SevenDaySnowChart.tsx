@@ -40,20 +40,12 @@ class SevenDaySnowChart extends Component {
     };
 
     create7DaySnowfallSeries(resorts: any) {
-        const series7DayData: [{}] = [{}];
-        var resort7Day = {};
-        console.log(this.props);
-        resorts.map((resort: { _id: any; snowreport: { values: { past7Days: any } } }) => {
-            console.log(resort);
-            resort7Day = {
+        return resorts.map((resort: { _id: any; snowreport: { values: { past7Days: any } } }) => {
+            return {
                 name: resort._id,
                 y: resort.snowreport.values.past7Days
             };
-
-            series7DayData.push(resort7Day);
         });
-        console.log(series7DayData);
-        return series7DayData;
     }
 
     createHighChartOptions(resorts: any) {
