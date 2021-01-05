@@ -5,7 +5,7 @@ import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { ResolvedTypeReferenceDirectiveWithFailedLookupLocations } from 'typescript';
 
-class TwentyFourHourSnowChart extends Component {
+class SevenDaySnowChart extends Component {
     options: Highcharts.Options;
     // The wrapper exports only a default component class that at the same time is a
     // namespace for the related Props interface (HighchartsReact.Props). All other
@@ -39,11 +39,11 @@ class TwentyFourHourSnowChart extends Component {
         ]
     };
 
-    create24HourSnowfallSeries(resorts: any) {
-        return resorts.map((resort: { _id: any; snowreport: { values: { past24Hours: any } } }) => {
+    create7DaySnowfallSeries(resorts: any) {
+        return resorts.map((resort: { _id: any; snowreport: { values: { past7Days: any } } }) => {
             return {
                 name: resort._id,
-                y: resort.snowreport.values.past24Hours
+                y: resort.snowreport.values.past7Days
             };
         });
     }
@@ -51,7 +51,7 @@ class TwentyFourHourSnowChart extends Component {
     createHighChartOptions(resorts: any) {
         const options: Highcharts.Options = {
             title: {
-                text: 'Past 24 Hours Snowfall'
+                text: 'Past 7 Days Snowfall'
             },
             plotOptions: {
                 column: {
@@ -86,7 +86,7 @@ class TwentyFourHourSnowChart extends Component {
                 {
                     type: 'column',
                     name: 'Snowfall',
-                    data: this.create24HourSnowfallSeries(resorts)
+                    data: this.create7DaySnowfallSeries(resorts)
                 }
             ],
             legend: {
@@ -99,7 +99,6 @@ class TwentyFourHourSnowChart extends Component {
     render() {
         const { resorts } = this.props;
         this.options = this.createHighChartOptions(resorts);
-        console.log(this.props);
         return (
             <div style={{ width: '55%' }}>
                 <HighchartsReact highcharts={Highcharts} options={{ ...this.options }} {...this.props} />
@@ -108,4 +107,4 @@ class TwentyFourHourSnowChart extends Component {
     }
 }
 
-export default TwentyFourHourSnowChart;
+export default SevenDaySnowChart;
