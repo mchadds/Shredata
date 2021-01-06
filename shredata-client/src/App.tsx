@@ -4,7 +4,7 @@ import TwentyFourHourSnowChart from './components/TwentyFourHourSnowChart';
 import FourtyEightHourSnowChart from './components/FourtyEightHourSnowChart';
 import SevenDaySnowChart from './components/SevenDaySnowChart';
 import IntervalSnowChartComparison from './components/IntervalSnowChartComparison';
-import IntervalDropDown from './components/IntervalDropDown';
+import IntervalDropdown from './components/IntervalDropdown';
 import './App.css';
 import { format } from 'highcharts';
 import { SelectCallback } from 'react-bootstrap/esm/helpers';
@@ -86,7 +86,7 @@ class App extends Component {
                 </form>
                 <p>{this.state.responseToPost}</p> */}
                 <main>
-                    <IntervalDropDown />
+                    <IntervalDropdown />
                     <Map resorts={this.state.response.resorts} />
                     <TwentyFourHourSnowChart resorts={this.state.response.resorts} />
                     {/* <FourtyEightHourSnowChart resorts={this.state.response.resorts} /> */}

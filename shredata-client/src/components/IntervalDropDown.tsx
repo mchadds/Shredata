@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { SelectCallback } from 'react-bootstrap/esm/helpers';
 
-class IntervalDropDown extends Component {
+class IntervalDropdown extends Component {
     // props = {
     //     //handleDropdownSelect: (e: any) => {},
     //     onSelect: (e: any) => {}
@@ -34,4 +34,4 @@ class IntervalDropDown extends Component {
     }
 }
 
-export default IntervalDropDown;
+export default IntervalDropdown;
