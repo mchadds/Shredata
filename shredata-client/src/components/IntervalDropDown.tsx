@@ -1,18 +1,33 @@
 import React, { Component } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { SelectCallback } from 'react-bootstrap/esm/helpers';
 
 class IntervalDropDown extends Component {
+    // props = {
+    //     //handleDropdownSelect: (e: any) => {},
+    //     onSelect: (e: any) => {}
+    // };
+
+    handleDropdownSelect = (e: any) => {
+        console.log(e);
+    };
+
     render() {
+        //const { handleDropdownSelect } = this.props;
         return (
-            <Dropdown>
+            <Dropdown onSelect={this.handleDropdownSelect}>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                     Snowfall Interval
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">24 Hours</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">48 Hours</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">7 Days</Dropdown.Item>
+                    <Dropdown.Item eventKey="24Hours">24 Hours</Dropdown.Item>
+                    <Dropdown.Item eventKey="48Hours" href="48Hours">
+                        48 Hours
+                    </Dropdown.Item>
+                    <Dropdown.Item eventKey="7Days" href="7Days">
+                        7 Days
+                    </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         );

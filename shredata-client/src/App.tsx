@@ -7,6 +7,7 @@ import IntervalSnowChartComparison from './components/IntervalSnowChartCompariso
 import IntervalDropDown from './components/IntervalDropDown';
 import './App.css';
 import { format } from 'highcharts';
+import { SelectCallback } from 'react-bootstrap/esm/helpers';
 
 class App extends Component {
     state = {
@@ -58,6 +59,10 @@ class App extends Component {
 
         this.setState({ responseToPost: body });
     };
+
+    // handleDropdownSelect = (e: any) => {
+    //     console.log(e);
+    // };
 
     render() {
         return (
