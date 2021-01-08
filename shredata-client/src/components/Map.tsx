@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { TileLayer, Marker, CircleMarker, Popup, MapContainer } from 'react-leaflet';
+import { TileLayer, Marker, CircleMarker, Popup, MapContainer, Tooltip } from 'react-leaflet';
 
 class Map extends Component {
     // this method can decide whether an ajax call should be made to get new data based on props and state objects
@@ -69,10 +69,10 @@ class Map extends Component {
                             fillOpacity={0.5}
                             stroke={false}
                         >
-                            <Popup>
+                            <Tooltip>
                                 {resort._id} <br /> Snowfall: <br /> Past 24 Hours: {resort.snowreport.values.past24Hours} cm <br /> Past 48 Hrs: {resort.snowreport.values.past48Hours} cm <br /> Past
                                 7 Days: {resort.snowreport.values.past7Days} cm <br /> Time of Recording: {resort.snowreport.updateTime}
-                            </Popup>
+                            </Tooltip>
                         </CircleMarker>
                     ))}
                 </MapContainer>
