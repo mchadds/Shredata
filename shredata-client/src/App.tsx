@@ -30,7 +30,7 @@ class App extends Component {
         },
         post: '',
         responseToPost: '',
-        interval: null
+        interval: '24Hours'
     };
 
     create24HourSnowfallSeries(resorts: any) {
@@ -40,6 +40,34 @@ class App extends Component {
                 y: resort.snowreport.values.past24Hours
             };
         });
+    }
+
+    create48HourSnowfallSeries(resorts: any) {
+        return resorts.map((resort: { _id: any; snowreport: { values: { past48Hours: any } } }) => {
+            return {
+                name: resort._id,
+                y: resort.snowreport.values.past48Hours
+            };
+        });
+    }
+
+    create7DaySnowfallSeries(resorts: any) {
+        return resorts.map((resort: { _id: any; snowreport: { values: { past7Days: any } } }) => {
+            return {
+                name: resort._id,
+                y: resort.snowreport.values.past7Days
+            };
+        });
+    }
+
+    createIntervalSnowfallSeries(interval: string, resorts: any) {
+        if (interval == '48Hours') {
+            return this.create48HourSnowfallSeries(resorts);
+        } else if (interval == '7Days') {
+            return this.create7DaySnowfallSeries(resorts);
+        } else {
+            return this.create24HourSnowfallSeries(resorts);
+        }
     }
 
     componentDidMount() {
@@ -71,9 +99,11 @@ class App extends Component {
     };
 
     handleDropdownSelect = (e: any) => {
+        const state = this.state;
+        state.interval = e;
+        //this.state.interval = e.eventKey;
         debugger;
-        console.log(e);
-        console.log('WORKING');
+        this.setState({ state });
         //return e;
     };
 
@@ -99,14 +129,17 @@ class App extends Component {
                 </form>
                 <p>{this.state.responseToPost}</p> */}
                 <main>
-                    <IntervalDropdown
+                    <button onClick={() => this.handleDropdownSelect('24Hours')}>24Hours</button>
+                    <button onClick={() => this.handleDropdownSelect('48Hours')}>48Hours</button>
+                    <button onClick={() => this.handleDropdownSelect('7Days')}>7Days</button>
+                    {/* <IntervalDropdown
                         //onSelect={this.handleDropdownSelect(this.state)}
                         handleDropdownSelect={(e: any) => this.handleDropdownSelect(e)}
                         // handleDropdownSelect={this.handleDropdownSelect()}
-                    />
+                    /> */}
                     <Map resorts={this.state.response.resorts} />
-                    <TwentyFourHourSnowChart resorts={this.state.response.resorts} />
-                    {/* <TwentyFourHourSnowChart seriesData={this.create24HourSnowfallSeries(this.state.response.resorts)} /> */}
+                    {/* <TwentyFourHourSnowChart resorts={this.state.response.resorts} /> */}
+                    <TwentyFourHourSnowChart seriesData={this.createIntervalSnowfallSeries(this.state.interval, this.state.response.resorts)} />
                     {/* <FourtyEightHourSnowChart resorts={this.state.response.resorts} /> */}
                     {/* <SevenDaySnowChart resorts={this.state.response.resorts} /> */}
                     {/* <IntervalSnowChartComparison resorts={this.state.response.resorts} /> */}
