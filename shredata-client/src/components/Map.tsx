@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { TileLayer, Marker, CircleMarker, Popup, MapContainer, Tooltip } from 'react-leaflet';
+import { TileLayer, Marker, CircleMarker, Popup, MapContainer, Tooltip, useMapEvents } from 'react-leaflet';
 
 class Map extends Component {
     // this method can decide whether an ajax call should be made to get new data based on props and state objects
@@ -54,6 +54,10 @@ class Map extends Component {
         }
     }
 
+    //  map = useMapEvent('click', () => {
+    //     map.setCenter([50.5, 30.5])
+    //   })
+
     render() {
         const { interval } = this.props.state;
         const { resorts } = this.props.state.response;
@@ -69,6 +73,9 @@ class Map extends Component {
                             fillOpacity={0.5}
                             stroke={false}
                         >
+                            {/* <Tooltip permanent={true} direction={'top'} className={'text 2'}>
+                                {resort._id}
+                            </Tooltip> */}
                             <Tooltip>
                                 {resort._id} <br /> Snowfall: <br /> Past 24 Hours: {resort.snowreport.values.past24Hours} cm <br /> Past 48 Hrs: {resort.snowreport.values.past48Hours} cm <br /> Past
                                 7 Days: {resort.snowreport.values.past7Days} cm <br /> Time of Recording: {resort.snowreport.updateTime}

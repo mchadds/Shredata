@@ -95,8 +95,15 @@ class TwentyFourHourSnowChart extends Component {
                 {
                     type: 'column',
                     name: 'Snowfall',
-                    data: seriesData
+                    data: seriesData,
                     //data: this.create24HourSnowfallSeries(resorts)
+                    point: {
+                        events: {
+                            click: (e) => {
+                                console.log(e.point.name);
+                            }
+                        }
+                    }
                 }
             ],
             legend: {
