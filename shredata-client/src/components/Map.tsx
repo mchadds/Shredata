@@ -16,25 +16,7 @@ class Map extends Component {
     //     console.log('Counter - Unmount');
     //   }
 
-    constructor(
-        props: any
-        //  {
-        //     resorts: [
-        //         {
-        //             _id: 0,
-        //             latitude: 0,
-        //             longitude: 0,
-        //             snowreport: {
-        //                 values: {
-        //                     past24Hours: 0,
-        //                     past48Hours: 0,
-        //                     past7Days: 0
-        //                 }
-        //             }
-        //         }
-        //     ]
-        // }
-    ) {
+    constructor(props: any) {
         super(props);
         this.props = props;
     }

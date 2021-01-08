@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
+import { DropdownProps } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { SelectCallback } from 'react-bootstrap/esm/helpers';
 
 class IntervalDropdown extends Component {
-    // props = {
-    //     //handleDropdownSelect: (e: any) => {},
-    //     onSelect: (e: any) => {}
-    // };
+    constructor(props: any) {
+        super(props);
+        this.props = props;
+    }
 
-    handleDropdownSelect = (e: any) => {
-        console.log(e);
+    props = {
+        handleDropdownSelect: (e: any) => {}
+        // onSelect: (e: SelectCallback) => {}
     };
+
+    // handleDropdownSelect = (e: any) => {
+    //     console.log(e);
+    // };
 
     render() {
         //const { handleDropdownSelect } = this.props;
         return (
-            <Dropdown onSelect={this.handleDropdownSelect}>
+            <Dropdown onSelect={(e: any) => this.props.handleDropdownSelect(e)}>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                     Snowfall Interval
                 </Dropdown.Toggle>

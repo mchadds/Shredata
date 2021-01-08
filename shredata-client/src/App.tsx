@@ -29,8 +29,18 @@ class App extends Component {
             ]
         },
         post: '',
-        responseToPost: ''
+        responseToPost: '',
+        interval: null
     };
+
+    create24HourSnowfallSeries(resorts: any) {
+        return resorts.map((resort: { _id: any; snowreport: { values: { past24Hours: any } } }) => {
+            return {
+                name: resort._id,
+                y: resort.snowreport.values.past24Hours
+            };
+        });
+    }
 
     componentDidMount() {
         this.callApi()
@@ -60,9 +70,12 @@ class App extends Component {
         this.setState({ responseToPost: body });
     };
 
-    // handleDropdownSelect = (e: any) => {
-    //     console.log(e);
-    // };
+    handleDropdownSelect = (e: any) => {
+        debugger;
+        console.log(e);
+        console.log('WORKING');
+        //return e;
+    };
 
     render() {
         return (
@@ -86,9 +99,14 @@ class App extends Component {
                 </form>
                 <p>{this.state.responseToPost}</p> */}
                 <main>
-                    <IntervalDropdown />
+                    <IntervalDropdown
+                        //onSelect={this.handleDropdownSelect(this.state)}
+                        handleDropdownSelect={(e: any) => this.handleDropdownSelect(e)}
+                        // handleDropdownSelect={this.handleDropdownSelect()}
+                    />
                     <Map resorts={this.state.response.resorts} />
                     <TwentyFourHourSnowChart resorts={this.state.response.resorts} />
+                    {/* <TwentyFourHourSnowChart seriesData={this.create24HourSnowfallSeries(this.state.response.resorts)} /> */}
                     {/* <FourtyEightHourSnowChart resorts={this.state.response.resorts} /> */}
                     {/* <SevenDaySnowChart resorts={this.state.response.resorts} /> */}
                     {/* <IntervalSnowChartComparison resorts={this.state.response.resorts} /> */}

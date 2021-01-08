@@ -39,6 +39,10 @@ class TwentyFourHourSnowChart extends Component {
         ]
     };
 
+    // props = {
+    //     seriesData: null
+    // };
+
     create24HourSnowfallSeries(resorts: any) {
         return resorts.map((resort: { _id: any; snowreport: { values: { past24Hours: any } } }) => {
             return {
@@ -48,7 +52,10 @@ class TwentyFourHourSnowChart extends Component {
         });
     }
 
-    createHighChartOptions(resorts: any) {
+    createHighChartOptions(
+        resorts: any
+        // seriesData: any
+    ) {
         const options: Highcharts.Options = {
             title: {
                 text: 'Past 24 Hours Snowfall'
@@ -86,6 +93,7 @@ class TwentyFourHourSnowChart extends Component {
                 {
                     type: 'column',
                     name: 'Snowfall',
+                    //data: seriesData
                     data: this.create24HourSnowfallSeries(resorts)
                 }
             ],
@@ -99,6 +107,7 @@ class TwentyFourHourSnowChart extends Component {
     render() {
         const { resorts } = this.props;
         this.options = this.createHighChartOptions(resorts);
+        // this.options = this.createHighChartOptions(seriesData);
         console.log(this.props);
         return (
             <div style={{ width: '30%' }}>
