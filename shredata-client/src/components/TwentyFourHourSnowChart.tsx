@@ -40,7 +40,8 @@ class TwentyFourHourSnowChart extends Component {
     // };
 
     props = {
-        seriesData: null
+        seriesData: null,
+        interval: ''
     };
 
     // create24HourSnowfallSeries(resorts: any) {
@@ -54,11 +55,12 @@ class TwentyFourHourSnowChart extends Component {
 
     createHighChartOptions(
         //resorts: any
-        seriesData: any
+        seriesData: any,
+        interval: string
     ) {
         const options: Highcharts.Options = {
             title: {
-                text: 'Past 24 Hours Snowfall'
+                text: 'Past ' + interval + ' Snowfall'
             },
             plotOptions: {
                 column: {
@@ -107,8 +109,8 @@ class TwentyFourHourSnowChart extends Component {
     render() {
         // const { resorts } = this.props;
         // this.options = this.createHighChartOptions(resorts);
-        const { seriesData } = this.props;
-        this.options = this.createHighChartOptions(seriesData);
+        const { seriesData, interval } = this.props;
+        this.options = this.createHighChartOptions(seriesData, interval);
         console.log(this.props);
         return (
             <div style={{ width: '30%' }}>

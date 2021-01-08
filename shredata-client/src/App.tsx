@@ -30,7 +30,7 @@ class App extends Component {
         },
         post: '',
         responseToPost: '',
-        interval: '24Hours'
+        interval: '24 Hours'
     };
 
     create24HourSnowfallSeries(resorts: any) {
@@ -61,9 +61,9 @@ class App extends Component {
     }
 
     createIntervalSnowfallSeries(interval: string, resorts: any) {
-        if (interval == '48Hours') {
+        if (interval == '48 Hours') {
             return this.create48HourSnowfallSeries(resorts);
-        } else if (interval == '7Days') {
+        } else if (interval == '7 Days') {
             return this.create7DaySnowfallSeries(resorts);
         } else {
             return this.create24HourSnowfallSeries(resorts);
@@ -98,14 +98,14 @@ class App extends Component {
         this.setState({ responseToPost: body });
     };
 
-    handleDropdownSelect = (e: any) => {
+    handleDropdownSelect(e: any) {
         const state = this.state;
         state.interval = e;
         //this.state.interval = e.eventKey;
         debugger;
         this.setState({ state });
         //return e;
-    };
+    }
 
     render() {
         return (
@@ -129,17 +129,17 @@ class App extends Component {
                 </form>
                 <p>{this.state.responseToPost}</p> */}
                 <main>
-                    <button onClick={() => this.handleDropdownSelect('24Hours')}>24Hours</button>
-                    <button onClick={() => this.handleDropdownSelect('48Hours')}>48Hours</button>
-                    <button onClick={() => this.handleDropdownSelect('7Days')}>7Days</button>
+                    <button onClick={() => this.handleDropdownSelect('24 Hours')}>24 Hours</button>
+                    <button onClick={() => this.handleDropdownSelect('48 Hours')}>48 Hours</button>
+                    <button onClick={() => this.handleDropdownSelect('7 Days')}>7 Days</button>
                     {/* <IntervalDropdown
                         //onSelect={this.handleDropdownSelect(this.state)}
                         handleDropdownSelect={(e: any) => this.handleDropdownSelect(e)}
                         // handleDropdownSelect={this.handleDropdownSelect()}
                     /> */}
-                    <Map resorts={this.state.response.resorts} />
+                    <Map state={this.state} />
                     {/* <TwentyFourHourSnowChart resorts={this.state.response.resorts} /> */}
-                    <TwentyFourHourSnowChart seriesData={this.createIntervalSnowfallSeries(this.state.interval, this.state.response.resorts)} />
+                    <TwentyFourHourSnowChart seriesData={this.createIntervalSnowfallSeries(this.state.interval, this.state.response.resorts)} interval={this.state.interval} />
                     {/* <FourtyEightHourSnowChart resorts={this.state.response.resorts} /> */}
                     {/* <SevenDaySnowChart resorts={this.state.response.resorts} /> */}
                     {/* <IntervalSnowChartComparison resorts={this.state.response.resorts} /> */}
