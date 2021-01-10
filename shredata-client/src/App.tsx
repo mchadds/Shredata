@@ -4,7 +4,6 @@ import TwentyFourHourSnowChart from './components/TwentyFourHourSnowChart';
 import FourtyEightHourSnowChart from './components/FourtyEightHourSnowChart';
 import SevenDaySnowChart from './components/SevenDaySnowChart';
 import IntervalSnowChartComparison from './components/IntervalSnowChartComparison';
-import IntervalDropdown from './components/IntervalDropdown';
 import './App.css';
 import { format } from 'highcharts';
 import { SelectCallback } from 'react-bootstrap/esm/helpers';
