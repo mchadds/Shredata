@@ -5,15 +5,22 @@
 .container {
     height: 100%;
     width: 50%;
-    float: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
     /* width: 100%;
     display: flex;
     flex-wrap: wrap; */
 }
 
 .leaflet-container {
-    width: 30%;
-    height: 30vh;
+    margin-top: 5vh;
+    float: left;
+    width: 45%;
+    height: 50vh;
+    margin-right: 10%;
+    border: 4px solid silver;
 }
 
 .App-logo {

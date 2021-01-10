@@ -8,6 +8,8 @@ import IntervalDropdown from './components/IntervalDropdown';
 import './App.css';
 import { format } from 'highcharts';
 import { SelectCallback } from 'react-bootstrap/esm/helpers';
+import ButtonGroup from 'react-bootstrap/esm/ButtonGroup';
+import Button from 'react-bootstrap/esm/Button';
 
 class App extends Component {
     state = {
@@ -128,10 +130,22 @@ class App extends Component {
                     <button type="submit">Submit</button>
                 </form>
                 <p>{this.state.responseToPost}</p> */}
-                <main>
-                    <button onClick={() => this.handleDropdownSelect('24 Hours')}>24 Hours</button>
+                <main className="container">
+                    <h1 style={{ color: 'white' }}>Snow Intelligence</h1>
+                    {/* <ButtonGroup style={{ marginTop: '5vh' }} size="lg" className="mb-2"> */}
+                    <Button style={{ border: '2px solid black', marginTop: '5vh', marginRight: '1%' }} onClick={() => this.handleDropdownSelect('24 Hours')}>
+                        24 Hours
+                    </Button>
+                    <Button style={{ border: '2px solid black', marginTop: '5vh', marginRight: '1%' }} onClick={() => this.handleDropdownSelect('48 Hours')}>
+                        48 Hours
+                    </Button>
+                    <Button style={{ border: '2px solid black', marginTop: '5vh' }} onClick={() => this.handleDropdownSelect('7 Days')}>
+                        7 Days
+                    </Button>
+                    {/* </ButtonGroup> */}
+                    {/* <button onClick={() => this.handleDropdownSelect('24 Hours')}>24 Hours</button>
                     <button onClick={() => this.handleDropdownSelect('48 Hours')}>48 Hours</button>
-                    <button onClick={() => this.handleDropdownSelect('7 Days')}>7 Days</button>
+                    <button onClick={() => this.handleDropdownSelect('7 Days')}>7 Days</button> */}
                     {/* <IntervalDropdown
                         //onSelect={this.handleDropdownSelect(this.state)}
                         handleDropdownSelect={(e: any) => this.handleDropdownSelect(e)}

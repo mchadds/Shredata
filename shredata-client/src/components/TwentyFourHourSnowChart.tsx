@@ -59,12 +59,16 @@ class TwentyFourHourSnowChart extends Component {
         interval: string
     ) {
         const options: Highcharts.Options = {
+            chart: {
+                height: '73%'
+            },
             title: {
                 text: 'Past ' + interval + ' Snowfall'
             },
             plotOptions: {
                 column: {
                     stacking: 'normal'
+                    //allowPointSelect: true
                 },
                 series: {
                     borderWidth: 0,
@@ -101,6 +105,8 @@ class TwentyFourHourSnowChart extends Component {
                         events: {
                             click: (e) => {
                                 console.log(e.point.name);
+                                console.log(this);
+                                //e.point.color = '#a4edba';
                             }
                         }
                     }
@@ -120,7 +126,7 @@ class TwentyFourHourSnowChart extends Component {
         this.options = this.createHighChartOptions(seriesData, interval);
         console.log(this.props);
         return (
-            <div style={{ width: '30%' }}>
+            <div style={{ width: '45%', float: 'left', border: '4px solid silver', marginTop: '5vh' }}>
                 <HighchartsReact highcharts={Highcharts} options={{ ...this.options }} {...this.props} />
             </div>
         );
