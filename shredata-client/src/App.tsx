@@ -4,7 +4,12 @@ import TwentyFourHourSnowChart from './components/TwentyFourHourSnowChart';
 import FourtyEightHourSnowChart from './components/FourtyEightHourSnowChart';
 import SevenDaySnowChart from './components/SevenDaySnowChart';
 import IntervalSnowChartComparison from './components/IntervalSnowChartComparison';
+import IntervalDropdown from './components/IntervalDropdown';
 import './App.css';
+import { format } from 'highcharts';
+import { SelectCallback } from 'react-bootstrap/esm/helpers';
+import ButtonGroup from 'react-bootstrap/esm/ButtonGroup';
+import Button from 'react-bootstrap/esm/Button';
 
 class App extends Component {
     state = {
@@ -26,8 +31,46 @@ class App extends Component {
             ]
         },
         post: '',
-        responseToPost: ''
+        responseToPost: '',
+        interval: '24 Hours'
     };
+
+    create24HourSnowfallSeries(resorts: any) {
+        return resorts.map((resort: { _id: any; snowreport: { values: { past24Hours: any } } }) => {
+            return {
+                name: resort._id,
+                y: resort.snowreport.values.past24Hours
+            };
+        });
+    }
+
+    create48HourSnowfallSeries(resorts: any) {
+        return resorts.map((resort: { _id: any; snowreport: { values: { past48Hours: any } } }) => {
+            return {
+                name: resort._id,
+                y: resort.snowreport.values.past48Hours
+            };
+        });
+    }
+
+    create7DaySnowfallSeries(resorts: any) {
+        return resorts.map((resort: { _id: any; snowreport: { values: { past7Days: any } } }) => {
+            return {
+                name: resort._id,
+                y: resort.snowreport.values.past7Days
+            };
+        });
+    }
+
+    createIntervalSnowfallSeries(interval: string, resorts: any) {
+        if (interval == '48 Hours') {
+            return this.create48HourSnowfallSeries(resorts);
+        } else if (interval == '7 Days') {
+            return this.create7DaySnowfallSeries(resorts);
+        } else {
+            return this.create24HourSnowfallSeries(resorts);
+        }
+    }
 
     componentDidMount() {
         this.callApi()
@@ -57,6 +100,15 @@ class App extends Component {
         this.setState({ responseToPost: body });
     };
 
+    handleDropdownSelect(e: any) {
+        const state = this.state;
+        state.interval = e;
+        //this.state.interval = e.eventKey;
+        debugger;
+        this.setState({ state });
+        //return e;
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -78,12 +130,34 @@ class App extends Component {
                     <button type="submit">Submit</button>
                 </form>
                 <p>{this.state.responseToPost}</p> */}
-
-                <Map resorts={this.state.response.resorts} />
-                <TwentyFourHourSnowChart resorts={this.state.response.resorts} />
-                <FourtyEightHourSnowChart resorts={this.state.response.resorts} />
-                <SevenDaySnowChart resorts={this.state.response.resorts} />
-                {/* <IntervalSnowChartComparison resorts={this.state.response.resorts} /> */}
+                <main className="container">
+                    <h1 style={{ color: 'white' }}>Snow Intelligence</h1>
+                    {/* <ButtonGroup style={{ marginTop: '5vh' }} size="lg" className="mb-2"> */}
+                    <Button style={{ border: '2px solid black', marginTop: '5vh', marginRight: '1%' }} onClick={() => this.handleDropdownSelect('24 Hours')}>
+                        24 Hours
+                    </Button>
+                    <Button style={{ border: '2px solid black', marginTop: '5vh', marginRight: '1%' }} onClick={() => this.handleDropdownSelect('48 Hours')}>
+                        48 Hours
+                    </Button>
+                    <Button style={{ border: '2px solid black', marginTop: '5vh' }} onClick={() => this.handleDropdownSelect('7 Days')}>
+                        7 Days
+                    </Button>
+                    {/* </ButtonGroup> */}
+                    {/* <button onClick={() => this.handleDropdownSelect('24 Hours')}>24 Hours</button>
+                    <button onClick={() => this.handleDropdownSelect('48 Hours')}>48 Hours</button>
+                    <button onClick={() => this.handleDropdownSelect('7 Days')}>7 Days</button> */}
+                    {/* <IntervalDropdown
+                        //onSelect={this.handleDropdownSelect(this.state)}
+                        handleDropdownSelect={(e: any) => this.handleDropdownSelect(e)}
+                        // handleDropdownSelect={this.handleDropdownSelect()}
+                    /> */}
+                    <Map state={this.state} />
+                    {/* <TwentyFourHourSnowChart resorts={this.state.response.resorts} /> */}
+                    <TwentyFourHourSnowChart seriesData={this.createIntervalSnowfallSeries(this.state.interval, this.state.response.resorts)} interval={this.state.interval} />
+                    {/* <FourtyEightHourSnowChart resorts={this.state.response.resorts} /> */}
+                    {/* <SevenDaySnowChart resorts={this.state.response.resorts} /> */}
+                    {/* <IntervalSnowChartComparison resorts={this.state.response.resorts} /> */}
+                </main>
             </React.Fragment>
         );
     }

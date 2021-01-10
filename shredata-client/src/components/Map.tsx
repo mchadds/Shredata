@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { TileLayer, Marker, CircleMarker, Popup, MapContainer } from 'react-leaflet';
+import { TileLayer, Marker, CircleMarker, Popup, MapContainer, Tooltip, useMapEvents } from 'react-leaflet';
 
 class Map extends Component {
     // this method can decide whether an ajax call should be made to get new data based on props and state objects
@@ -16,59 +16,70 @@ class Map extends Component {
     //     console.log('Counter - Unmount');
     //   }
 
-    constructor(
-        props: any
-        //  {
-        //     resorts: [
-        //         {
-        //             _id: 0,
-        //             latitude: 0,
-        //             longitude: 0,
-        //             snowreport: {
-        //                 values: {
-        //                     past24Hours: 0,
-        //                     past48Hours: 0,
-        //                     past7Days: 0
-        //                 }
-        //             }
-        //         }
-        //     ]
-        // }
-    ) {
+    constructor(props: any) {
         super(props);
         this.props = props;
     }
 
     props = {
-        resorts: [
-            {
-                _id: 0,
-                latitude: 0,
-                longitude: 0,
-                snowreport: {
-                    updateTime: Date.now() - 1,
-                    values: {
-                        past24Hours: 0,
-                        past48Hours: 0,
-                        past7Days: 0
+        state: {
+            response: {
+                resorts: [
+                    {
+                        _id: 0,
+                        latitude: 0,
+                        longitude: 0,
+                        snowreport: {
+                            updateTime: Date.now() - 1,
+                            values: {
+                                past24Hours: 0,
+                                past48Hours: 0,
+                                past7Days: 0
+                            }
+                        }
                     }
-                }
-            }
-        ]
+                ]
+            },
+            interval: '24 Hours'
+        }
     };
 
+    getIntervalSnowFallValue(interval: string, resort: any) {
+        if (interval == '48 Hours') {
+            return resort.snowreport.values.past48Hours ? !null : 0;
+        } else if (interval == '7 Days') {
+            return resort.snowreport.values.past7Days;
+        } else {
+            return resort.snowreport.values.past24Hours;
+        }
+    }
+
+    //  map = useMapEvent('click', () => {
+    //     map.setCenter([50.5, 30.5])
+    //   })
+
     render() {
-        const { resorts } = this.props;
+        const { interval } = this.props.state;
+        const { resorts } = this.props.state.response;
         return (
             <div>
                 <MapContainer center={[50.82793, -116.84341]} zoom={7.4} scrollWheelZoom={false}>
                     <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                     {resorts.map((resort) => (
-                        <CircleMarker key={resort._id} center={[resort.latitude, resort.longitude]} radius={10 + resort.snowreport.values.past24Hours / 1.4} fillOpacity={0.5} stroke={false}>
-                            <Popup>
+                        <CircleMarker
+                            key={resort._id}
+                            center={[resort.latitude, resort.longitude]}
+                            radius={10 + this.getIntervalSnowFallValue(interval, resort) / 1.4}
+                            fillOpacity={0.5}
+                            stroke={false}
+                        >
+                            {/* <Tooltip permanent={true} direction={'top'} className={'text 2'}>
+                                {resort._id}
+                            </Tooltip> */}
+                            <Tooltip>
                                 {resort._id} <br /> Snowfall: <br /> Past 24 Hours: {resort.snowreport.values.past24Hours} cm <br /> Past 48 Hrs: {resort.snowreport.values.past48Hours} cm <br /> Past
                                 7 Days: {resort.snowreport.values.past7Days} cm <br /> Time of Recording: {resort.snowreport.updateTime}
-                            </Popup>
+                            </Tooltip>
                         </CircleMarker>
                     ))}
                 </MapContainer>
