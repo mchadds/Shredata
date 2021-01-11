@@ -3,12 +3,15 @@
     "version": "1.0.0",
     "description": "Basic restful api service using Node.JS, Express, and TypeScript",
     "main": "source/index.ts",
+    "homepage": "http://mchadds.github.io/shredata",
     "scripts": {
         "server": "nodemon source/index.ts",
         "client": "npm start --prefix shredata-client",
         "dev": "concurrently \"npm run server\" \"npm run client\"",
         "build": "rm -rf build/ && prettier --write source/ && tsc",
-        "test": "jest"
+        "test": "jest",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build"
     },
     "author": "",
     "license": "ISC",
