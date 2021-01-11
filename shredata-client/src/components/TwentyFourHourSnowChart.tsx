@@ -4,6 +4,7 @@ import * as ReactDom from 'react-dom';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { ResolvedTypeReferenceDirectiveWithFailedLookupLocations } from 'typescript';
+import { point } from 'leaflet';
 
 class TwentyFourHourSnowChart extends Component {
     options: Highcharts.Options;
@@ -67,7 +68,27 @@ class TwentyFourHourSnowChart extends Component {
             },
             plotOptions: {
                 column: {
-                    stacking: 'normal'
+                    stacking: 'normal',
+                    point: {
+                        events: {
+                            mouseOver: function (e) {
+                                let currentSelection = this.name;
+                                this.series.points.forEach(function (pt) {
+                                    if (pt.name != currentSelection) {
+                                        pt.setState('inactive');
+                                    } else {
+                                        pt.setState('hover');
+                                    }
+                                });
+                            },
+                            mouseOut: function (e) {
+                                let currentSelection = this.name;
+                                this.series.points.forEach(function (pt) {
+                                    pt.setState('');
+                                });
+                            }
+                        }
+                    }
                     //allowPointSelect: true
                 },
                 series: {
@@ -99,17 +120,17 @@ class TwentyFourHourSnowChart extends Component {
                 {
                     type: 'column',
                     name: 'Snowfall',
-                    data: seriesData,
+                    data: seriesData
                     //data: this.create24HourSnowfallSeries(resorts)
-                    point: {
-                        events: {
-                            click: (e) => {
-                                console.log(e.point.name);
-                                console.log(this);
-                                //e.point.color = '#a4edba';
-                            }
-                        }
-                    }
+                    // point: {
+                    //     events: {
+                    //         click: (e) => {
+                    //             console.log(e.point.name);
+                    //             console.log(this);
+                    //             //e.point.color = '#a4edba';
+                    //         }
+                    //     }
+                    // }
                 }
             ],
             legend: {
