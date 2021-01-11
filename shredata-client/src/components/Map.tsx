@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import { TileLayer, Marker, CircleMarker, Popup, MapContainer, Tooltip, useMapEvents } from 'react-leaflet';
+import { threadId } from 'worker_threads';
 
 class Map extends Component {
     // this method can decide whether an ajax call should be made to get new data based on props and state objects
@@ -34,7 +35,8 @@ class Map extends Component {
                             values: {
                                 past24Hours: 0,
                                 past48Hours: 0,
-                                past7Days: 0
+                                past7Days: 0,
+                                base: 0
                             }
                         }
                     }
@@ -49,9 +51,16 @@ class Map extends Component {
             return resort.snowreport.values.past48Hours ? !null : 0;
         } else if (interval == '7 Days') {
             return resort.snowreport.values.past7Days;
+        } else if (interval == 'Base') {
+            // 4 because base numbers are high
+            return resort.snowreport.values.base / 4;
         } else {
             return resort.snowreport.values.past24Hours;
         }
+    }
+
+    onHover() {
+        console.log('HEY');
     }
 
     //  map = useMapEvent('click', () => {
@@ -68,20 +77,41 @@ class Map extends Component {
                     {resorts.map((resort) => (
                         <CircleMarker
                             key={resort._id}
+                            //mouseover={this.onHover}
                             center={[resort.latitude, resort.longitude]}
                             radius={10 + this.getIntervalSnowFallValue(interval, resort) / 1.4}
                             fillOpacity={0.5}
                             stroke={false}
+                            // eventHandlers={{
+                            //     mouseover: function (e) {
+                            //         CircleMarker marker = e.target;
+                            //         marker.setSyle({
+                            //             fillOpacity: 1.0
+                            //         });
+
+                            //         console.log(e);
+                            //         console.log(this);
+                            //     }
+                            //     // () => {
+                            //     //this.onHover
+                            //     //     console.log('marker clicked');
+                            //     // }
+                            // }}
                         >
                             {/* <Tooltip permanent={true} direction={'top'} className={'text 2'}>
                                 {resort._id}
                             </Tooltip> */}
                             <Tooltip>
                                 {resort._id} <br /> Snowfall: <br /> Past 24 Hours: {resort.snowreport.values.past24Hours} cm <br /> Past 48 Hrs: {resort.snowreport.values.past48Hours} cm <br /> Past
-                                7 Days: {resort.snowreport.values.past7Days} cm <br /> Time of Recording: {resort.snowreport.updateTime}
+                                7 Days: {resort.snowreport.values.past7Days} cm <br /> Base: {resort.snowreport.values.base} cm <br /> Time of Recording: {resort.snowreport.updateTime}
                             </Tooltip>
                         </CircleMarker>
                     ))}
+                    {/* <Marker
+                        onMouseOver={(e) => {
+                            return e.target.openPopup();
+                        }}
+                    ></Marker> */}
                 </MapContainer>
 
                 {/* <span

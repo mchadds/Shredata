@@ -23,7 +23,8 @@ class App extends Component {
                         values: {
                             past24Hours: 0,
                             past48Hours: 0,
-                            past7Days: 0
+                            past7Days: 0,
+                            base: 0
                         }
                     }
                 }
@@ -33,6 +34,15 @@ class App extends Component {
         responseToPost: '',
         interval: '24 Hours'
     };
+
+    createBaseSnowfallSeries(resorts: any) {
+        return resorts.map((resort: { _id: any; snowreport: { values: { base: any } } }) => {
+            return {
+                name: resort._id,
+                y: resort.snowreport.values.base
+            };
+        });
+    }
 
     create24HourSnowfallSeries(resorts: any) {
         return resorts.map((resort: { _id: any; snowreport: { values: { past24Hours: any } } }) => {
@@ -66,6 +76,8 @@ class App extends Component {
             return this.create48HourSnowfallSeries(resorts);
         } else if (interval == '7 Days') {
             return this.create7DaySnowfallSeries(resorts);
+        } else if (interval == 'Base') {
+            return this.createBaseSnowfallSeries(resorts);
         } else {
             return this.create24HourSnowfallSeries(resorts);
         }
@@ -99,11 +111,10 @@ class App extends Component {
         this.setState({ responseToPost: body });
     };
 
-    handleDropdownSelect(e: any) {
+    handleIntervalSelect(e: any) {
         const state = this.state;
         state.interval = e;
         //this.state.interval = e.eventKey;
-        debugger;
         this.setState({ state });
         //return e;
     }
@@ -132,14 +143,17 @@ class App extends Component {
                 <main className="container">
                     <h1 style={{ color: 'white' }}>Snow Intelligence</h1>
                     {/* <ButtonGroup style={{ marginTop: '5vh' }} size="lg" className="mb-2"> */}
-                    <Button style={{ border: '2px solid black', marginTop: '5vh', marginRight: '1%' }} onClick={() => this.handleDropdownSelect('24 Hours')}>
+                    <Button style={{ border: '2px solid black', marginTop: '5vh', marginRight: '1%' }} onClick={() => this.handleIntervalSelect('24 Hours')}>
                         24 Hours
                     </Button>
-                    <Button style={{ border: '2px solid black', marginTop: '5vh', marginRight: '1%' }} onClick={() => this.handleDropdownSelect('48 Hours')}>
+                    <Button style={{ border: '2px solid black', marginTop: '5vh', marginRight: '1%' }} onClick={() => this.handleIntervalSelect('48 Hours')}>
                         48 Hours
                     </Button>
-                    <Button style={{ border: '2px solid black', marginTop: '5vh' }} onClick={() => this.handleDropdownSelect('7 Days')}>
+                    <Button style={{ border: '2px solid black', marginTop: '5vh', marginRight: '1%' }} onClick={() => this.handleIntervalSelect('7 Days')}>
                         7 Days
+                    </Button>
+                    <Button style={{ border: '2px solid black', marginTop: '5vh' }} onClick={() => this.handleIntervalSelect('Base')}>
+                        Base
                     </Button>
                     {/* </ButtonGroup> */}
                     {/* <button onClick={() => this.handleDropdownSelect('24 Hours')}>24 Hours</button>
