@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import { TileLayer, Marker, CircleMarker, Popup, MapContainer, Tooltip, useMapEvents } from 'react-leaflet';
 import { threadId } from 'worker_threads';
+import L, { circle, LatLng, map } from 'leaflet';
 
 class Map extends Component {
     // this method can decide whether an ajax call should be made to get new data based on props and state objects
@@ -63,6 +64,23 @@ class Map extends Component {
         console.log('HEY');
     }
 
+    // createMarker(coords: any) {
+    //     var markers = [];
+    //     debugger;
+    //     var circMark = L.circleMarker(coords, {
+    //         radius: 10,
+    //         fillOpacity: 0.5,
+    //         stroke: false
+    //     }).on('mouseover', function (e) {
+    //         console.log('HAI');
+    //         e.target.setOpacity(1);
+    //     });
+    //     markers.push(circMark);
+    //     return JSON.stringify(markers);
+    //     //L.featureGroup(markers).addTo(map)
+    //     return circMark;
+    // }
+
     //  map = useMapEvent('click', () => {
     //     map.setCenter([50.5, 30.5])
     //   })
@@ -74,6 +92,7 @@ class Map extends Component {
             <div>
                 <MapContainer center={[50.82793, -116.84341]} zoom={7.4} scrollWheelZoom={false}>
                     <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                    {/* {this.createMarker([50.82793, -116.84341])} */}
                     {resorts.map((resort) => (
                         <CircleMarker
                             key={resort._id}
@@ -82,23 +101,18 @@ class Map extends Component {
                             radius={10 + this.getIntervalSnowFallValue(interval, resort) / 1.4}
                             fillOpacity={0.5}
                             stroke={false}
-                            // eventHandlers={{
-                            //     mouseover: function (e) {
-                            //         CircleMarker marker = e.target;
-                            //         marker.setSyle({
-                            //             fillOpacity: 1.0
-                            //         });
-
-                            //         console.log(e);
-                            //         console.log(this);
-                            //     }
-                            //     // () => {
-                            //     //this.onHover
-                            //     //     console.log('marker clicked');
-                            //     // }
-                            // }}
+                            eventHandlers={{
+                                mouseover: function (e) {
+                                    e.target._path.attributes['fill-opacity'].value = 1;
+                                    //console.log(e);
+                                    //console.log(this);
+                                },
+                                mouseout: function (e) {
+                                    e.target._path.attributes['fill-opacity'].value = 0.5;
+                                }
+                            }}
                         >
-                            {/* <Tooltip permanent={true} direction={'top'} className={'text 2'}>
+                            {/* <Tooltip permanent={true} direction={'top'} className={'text4'} style={{}}>
                                 {resort._id}
                             </Tooltip> */}
                             <Tooltip>
@@ -107,11 +121,6 @@ class Map extends Component {
                             </Tooltip>
                         </CircleMarker>
                     ))}
-                    {/* <Marker
-                        onMouseOver={(e) => {
-                            return e.target.openPopup();
-                        }}
-                    ></Marker> */}
                 </MapContainer>
 
                 {/* <span
