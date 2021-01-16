@@ -1,4 +1,3 @@
-import { ObjectId } from 'bson';
 import config from '../config/config';
 import { MongoClient } from 'mongodb';
 

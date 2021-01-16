@@ -1,33 +1,7 @@
 {
-    "name": "nodejs-express-typescript-restfulapi",
+    "name": "Shredata",
     "version": "1.0.0",
     "description": "Basic restful api service using Node.JS, Express, and TypeScript",
-    "main": "source/index.ts",
-    "scripts": {
-        "server": "nodemon source/index.ts",
-        "client": "npm start --prefix shredata-client",
-        "dev": "concurrently \"npm run server\" \"npm run client\"",
-        "build": "rm -rf build/ && prettier --write source/ && tsc",
-        "test": "jest"
-    },
     "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "@types/bson": "^4.0.3",
-        "@types/concurrently": "^5.2.1",
-        "body-parser": "^1.19.0",
-        "dotenv": "^8.2.0",
-        "express": "^4.17.1",
-        "leaflet": "^1.7.1",
-        "mongoose": "^5.11.8"
-    },
-    "devDependencies": {
-        "@types/body-parser": "^1.19.0",
-        "@types/dotenv": "^8.2.0",
-        "@types/express": "^4.17.9",
-        "@types/jest": "^26.0.19",
-        "@types/mongoose": "^5.10.3",
-        "concurrently": "^5.3.0",
-        "ts-jest": "^26.4.4"
-    }
+    "license": "ISC"
 }
