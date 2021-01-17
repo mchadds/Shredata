@@ -10,6 +10,16 @@ import { SelectCallback } from 'react-bootstrap/esm/helpers';
 import ButtonGroup from 'react-bootstrap/esm/ButtonGroup';
 import Button from 'react-bootstrap/esm/Button';
 
+
+type Endpoint = "http://localhost:1337" | "prod"
+
+const getEndpoint = ():Endpoint => {
+    if(process.env.NODE_ENV === "production"){
+        return "prod"
+    }
+    return "http://localhost:1337"
+}
+
 class App extends Component {
     state = {
         response: {
@@ -90,7 +100,7 @@ class App extends Component {
     }
 
     callApi = async () => {
-        const response = await fetch('/api/resorts/get/snowReportsByResort');
+        const response = await fetch(`${getEndpoint()}/api/resorts/get/snowReportsByResort`);
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
 

@@ -1,0 +1,11 @@
+
+version: '3'
+
+services:
+  web:
+    image: shredata-client:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 3000:80 
