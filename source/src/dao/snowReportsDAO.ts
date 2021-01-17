@@ -15,7 +15,7 @@ export default class SnowReportsDAO {
         }
     }
 
-    /**.
+    /** .
      * Returns all snow reports
      * @param {Object} filters - The search parameters to use in the query.
      * @param {number} page - The page of snow reports to retrieve.
@@ -25,11 +25,11 @@ export default class SnowReportsDAO {
      */
     static async getSnowReports({
         // here's where the default parameters are set for the getSnowReports method
-        //filters = null,
-        //page = 0,
-        //moviesPerPage = 20
+        // filters = null,
+        // page = 0,
+        // moviesPerPage = 20
     } = {}) {
-        let queryParams: any = {};
+        const queryParams: any = {};
         // if (filters) {
         //     if ('text' in filters) {
         //         queryParams = this.textSearchQuery(filters['text']);
@@ -40,7 +40,7 @@ export default class SnowReportsDAO {
         //     }
         // }
 
-        let { query = {}, project = {} } = queryParams;
+        const { query = {}, project = {} } = queryParams;
         let cursor;
         try {
             cursor = await snowReports.find(query).project(project);

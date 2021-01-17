@@ -17,9 +17,9 @@ const ResortSchema: Schema = new Schema(
 
 // Mongoose allows you to make functions on action for example on save
 // this function writes to the extraInformation column after the document has been written to the collection
-//ResortSchema.post<IResort>('save', function () {
+// ResortSchema.post<IResort>('save', function () {
 //   this.extraInformation = 'THis is some extra info we want to put onto this entry after the save';
-//});
+// });
 
 // exporting model so it can be used in our restful api
 // Pass in IResort so that any time we use a mongoose function it will give us access to all of our variables
