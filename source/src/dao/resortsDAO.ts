@@ -1,4 +1,3 @@
-import { ObjectId } from 'bson';
 import config from '../config/config';
 import { MongoClient } from 'mongodb';
 
@@ -27,7 +26,7 @@ export default class ResortsDAO {
         const roleInfo = await shredata.command({ connectionStatus: 1 });
         const authInfo = roleInfo.authInfo.authenticatedUserRoles[0];
         const { poolSize, wtimeout } = shredata.s.db.serverConfig.s.options;
-        let response = {
+        const response = {
             poolSize,
             wtimeout,
             authInfo
@@ -46,11 +45,11 @@ export default class ResortsDAO {
      */
     static async getResorts({
         // here's where the default parameters are set for the getResorts method
-        //filters = null,
-        //page = 0,
-        //resortsPerPage = 20
+        // filters = null,
+        // page = 0,
+        // resortsPerPage = 20
     } = {}) {
-        let queryParams: any = {};
+        const queryParams: any = {};
         // if (filters) {
         //     if ('text' in filters) {
         //         queryParams = this.textSearchQuery(filters['text']);
@@ -61,10 +60,10 @@ export default class ResortsDAO {
         //     }
         // }
 
-        let { query = {}, project = {} } = queryParams;
+        const { query = {}, project = {} } = queryParams;
         let cursor;
         try {
-            //cursor = await resorts.get();
+            // cursor = await resorts.get();
             cursor = await resorts.find(query).project(project);
         } catch (e) {
             console.error(`Unable to issue find command, ${e}`);

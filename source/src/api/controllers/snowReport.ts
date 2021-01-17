@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 import SnowReport from '../../models/snowReport';
 
 import SnowReportsDAO from '../../dao/snowReportsDAO';
-//import Resort from '../models/resort';
-//import logging from '../config/logging';
+// import Resort from '../models/resort';
+// import logging from '../config/logging';
 
 // define namespace for sample controller
-//const NAMESPACE = 'Sample Controller';
+// const NAMESPACE = 'Sample Controller';
 
 // const getAllSnowReports = (req: Request, res: Response, next: NextFunction) => {
 //     SnowReport.find()
@@ -47,9 +47,9 @@ import SnowReportsDAO from '../../dao/snowReportsDAO';
 
 export default class SnowReportsController {
     static async apiGetSnowReports(req: Request, res: Response, next: NextFunction) {
-        //const MOVIES_PER_PAGE = 20;
+        // const MOVIES_PER_PAGE = 20;
         const { snowReportsList, totalNumSnowReports } = await SnowReportsDAO.getSnowReports();
-        let response = {
+        const response = {
             snowReports: snowReportsList,
             filters: {},
             total_results: totalNumSnowReports
