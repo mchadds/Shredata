@@ -16,7 +16,7 @@ If it does not load you can click the "Demo Video" link and select "View Raw" to
 
 Here is an image from the demo: 
 
-![Screenshot](https://github.com/mchadds/Shredata/blob/master/imgs/Shredata%20Demo.mp4)
+![Screenshot](https://github.com/mchadds/Shredata/blob/master/imgs/Screenshot.PNG)
 
 
 ## Tools
