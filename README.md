@@ -12,7 +12,7 @@ Shredata (Snow Intelligence) is a project that allows users to compare recent sn
 ## Demo
 This brief clip demonstrates the power and simplicity of the Shredata application:
 
-![Demo Vid](https://github.com/mchadds/Shredata/blob/master/imgs/'Shredata Demo.mp4')
+![Demo Vid](https://github.com/mchadds/Shredata/blob/master/imgs/Shredata%20Demo.mp4)
 
 ## Tools
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) Cloud instance of ski resort database
