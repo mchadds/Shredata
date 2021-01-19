@@ -25,3 +25,6 @@ Here is an image from the demo:
 - [AWS](https://aws.amazon.com/) Cloud provider
 - [Node.js](https://nodejs.org/en/) JavaScript runtime environment
 - [Express.js](https://expressjs.com/) Framework for API
+
+
+## Happy Shredding!
