@@ -1,7 +1,7 @@
 # Shredata
 
 ## Description
-Shredata (Snow Intelligence) is a project that allows users to compare recent snowfalls of their favourite mountains. Have you ever wondered which hill to go to based on the best new snow? Checking every single resort website for the snow report is time consuming (and inconvenient). Shredata has all this information in one place so you can find the most snow with ease! This idea was born out of a passion for being outside and utilizing the data at your fingertips.
+Shredata (Snow Intelligence) is a project that allows users to compare recent snowfalls of their favourite mountains. Have you ever wondered which hill to go to based on the best new snow? Checking every single resort website for the snow report is time consuming (and inconvenient). Shredata has all this information in one place (with daily updates) so you can find the most snow with ease! This idea was born out of a passion for being outside and utilizing the data at your fingertips.
 
 ## Demo
 This brief clip demonstrates the power and simplicity of the Shredata application:
@@ -25,6 +25,10 @@ Here is an image from the demo:
 - [AWS](https://aws.amazon.com/) Cloud provider
 - [Node.js](https://nodejs.org/en/) JavaScript runtime environment
 - [Express.js](https://expressjs.com/) Framework for API
+
+##Languages
+-[Typescript](https://www.typescriptlang.org/)
+-[Python](https://www.python.org/) For webscraping snowfall data
 
 
 ## Happy Shredding!
