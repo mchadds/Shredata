@@ -8,9 +8,6 @@ This brief gif demonstrates the power and simplicity of the Shredata application
 
 ![Demo Video](https://github.com/mchadds/Shredata/blob/master/imgs/DemoApp.gif)
 
-Here is an image from the demo: 
-
-![Screenshot](https://github.com/mchadds/Shredata/blob/master/imgs/Screenshot.PNG)
 
 ## Functionality
 - Users can select a snowfall interval (or base) by clicking the blue interval buttons at the top of the application
