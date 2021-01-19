@@ -7,6 +7,7 @@ Shredata (Snow Intelligence) is a project that allows users to compare recent sn
 This brief clip demonstrates the power and simplicity of the Shredata application:
 
 ![Demo Video](https://github.com/mchadds/Shredata/blob/master/imgs/Shredata%20Demo.mp4)
+
 If it does not load you can click the "Demo Video" link and select "View Raw" to download the demo.
 
 Here is an image from the demo: 
