@@ -27,7 +27,7 @@ Here is an image from the demo:
 - [Express.js](https://expressjs.com/) Framework for API
 
 ## Languages
-- [Typescript](https://www.typescriptlang.org/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [Python](https://www.python.org/) For webscraping snowfall data
 
 
