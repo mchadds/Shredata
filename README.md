@@ -16,8 +16,7 @@ This brief gif demonstrates the power and simplicity of the Shredata application
 - The circle markers include a tooltip containg the resorts name and the snowfall value for the selected interval
 
 ## Tools
-- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) Cloud instance of ski resort database
-- [AWS](https://aws.amazon.com/) Cloud provider
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) Cloud database instance
 - [Node.js](https://nodejs.org/en/) JavaScript runtime environment
 - [Express.js](https://expressjs.com/) Framework for API
 - [React.js](https://reactjs.org/) Front end design
