@@ -1,5 +1,5 @@
-import ResortsDAO from '../source/dao/resortsDAO';
-import config from '../source/config/config';
+import ResortsDAO from '../dao/resortsDAO';
+import config from '../config/config';
 import { MongoClient } from 'mongodb';
 import { Mongoose } from 'mongoose';
 

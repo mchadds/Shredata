@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import Map from './components/Map';
 import TwentyFourHourSnowChart from './components/TwentyFourHourSnowChart';
-import FourtyEightHourSnowChart from './components/FourtyEightHourSnowChart';
-import SevenDaySnowChart from './components/SevenDaySnowChart';
-import IntervalSnowChartComparison from './components/IntervalSnowChartComparison';
 import './App.css';
-import { format } from 'highcharts';
-import { SelectCallback } from 'react-bootstrap/esm/helpers';
-import ButtonGroup from 'react-bootstrap/esm/ButtonGroup';
 import Button from 'react-bootstrap/esm/Button';
+
+type Endpoint = 'http://localhost:1337' | 'prod';
+
+const getEndpoint = (): Endpoint => {
+    if (process.env.NODE_ENV === 'production') {
+        return 'prod';
+    }
+    return 'http://localhost:1337';
+};
 
 class App extends Component {
     state = {
@@ -32,11 +35,20 @@ class App extends Component {
         },
         post: '',
         responseToPost: '',
-        interval: '24 Hours'
+        interval: '24 Hours',
+        mouseOverMap: this.mouseOverMap
     };
+
+    mouseOverMap(e: any) {
+        debugger;
+        e.target._path.attributes['fill-opacity'].value = 1;
+        console.log(e);
+        console.log(this);
+    }
 
     createBaseSnowfallSeries(resorts: any) {
         return resorts.map((resort: { _id: any; snowreport: { values: { base: any } } }) => {
+            let snow = resort.snowreport.values.base ? !null : 'N/A';
             return {
                 name: resort._id,
                 y: resort.snowreport.values.base
@@ -57,7 +69,7 @@ class App extends Component {
         return resorts.map((resort: { _id: any; snowreport: { values: { past48Hours: any } } }) => {
             return {
                 name: resort._id,
-                y: resort.snowreport.values.past48Hours
+                y: resort.snowreport.values.past48Hours != null ? resort.snowreport.values.past48Hours : 0
             };
         });
     }
@@ -90,7 +102,7 @@ class App extends Component {
     }
 
     callApi = async () => {
-        const response = await fetch('/api/resorts/get/snowReportsByResort');
+        const response = await fetch(`${getEndpoint()}/api/resorts/get/snowReportsByResort`);
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
 
@@ -122,24 +134,6 @@ class App extends Component {
     render() {
         return (
             <React.Fragment>
-                {/* <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <p>
-                        Edit <code>src/App.js</code> and save to reload.
-                    </p>
-                    <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                        Learn React
-                    </a>
-                </header>
-                <p>{this.state.response}</p>
-                <form onSubmit={this.handleSubmit}>
-                    <p>
-                        <strong>Post to Server:</strong>
-                    </p>
-                    <input type="text" value={this.state.post} onChange={(e) => this.setState({ post: e.target.value })} />
-                    <button type="submit">Submit</button>
-                </form>
-                <p>{this.state.responseToPost}</p> */}
                 <main className="container">
                     <h1 style={{ color: 'white' }}>Snow Intelligence</h1>
                     {/* <ButtonGroup style={{ marginTop: '5vh' }} size="lg" className="mb-2"> */}
@@ -155,21 +149,8 @@ class App extends Component {
                     <Button style={{ border: '2px solid black', marginTop: '5vh' }} onClick={() => this.handleIntervalSelect('Base')}>
                         Base
                     </Button>
-                    {/* </ButtonGroup> */}
-                    {/* <button onClick={() => this.handleDropdownSelect('24 Hours')}>24 Hours</button>
-                    <button onClick={() => this.handleDropdownSelect('48 Hours')}>48 Hours</button>
-                    <button onClick={() => this.handleDropdownSelect('7 Days')}>7 Days</button> */}
-                    {/* <IntervalDropdown
-                        //onSelect={this.handleDropdownSelect(this.state)}
-                        handleDropdownSelect={(e: any) => this.handleDropdownSelect(e)}
-                        // handleDropdownSelect={this.handleDropdownSelect()}
-                    /> */}
                     <Map state={this.state} />
-                    {/* <TwentyFourHourSnowChart resorts={this.state.response.resorts} /> */}
                     <TwentyFourHourSnowChart seriesData={this.createIntervalSnowfallSeries(this.state.interval, this.state.response.resorts)} interval={this.state.interval} />
-                    {/* <FourtyEightHourSnowChart resorts={this.state.response.resorts} /> */}
-                    {/* <SevenDaySnowChart resorts={this.state.response.resorts} /> */}
-                    {/* <IntervalSnowChartComparison resorts={this.state.response.resorts} /> */}
                 </main>
             </React.Fragment>
         );

@@ -18,11 +18,11 @@ const MONGO_OPTIONS = {
 
 const MONGO_USERNAME = process.env.MONGO_USERNAME || 'skier_358';
 const MONGO_PASSWORD = process.env.MONGO_PASSWORD || 'h1tTh3Sl0p35';
-//mongodb://localhost:27017
+// mongodb://localhost:27017
 // also change to MONGO_URL instead of URI if not working
-//const MONGO_HOST = process.env.MONGO_URL || 'mongodb://localhost:27017';
+// const MONGO_HOST = process.env.MONGO_URL || 'mongodb://localhost:27017';
 const MONGO_HOST = process.env.MONGO_URL || 'clusterskireport.o0o97.mongodb.net/Shredata?retryWrites=true&w=majority';
-//const MONGO_HOST = process.env.MONGO_URL || 'clusterskireport-shard-00-00.o0o97.mongodb.net';
+// const MONGO_HOST = process.env.MONGO_URL || 'clusterskireport-shard-00-00.o0o97.mongodb.net';
 
 const MONGO = {
     host: MONGO_HOST,
@@ -31,7 +31,7 @@ const MONGO = {
     options: MONGO_OPTIONS,
     url: `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}`
     //  url: `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@clusterskireport.o0o97.mongodb.net/<dbname>?retryWrites=true&w=majority`
-    //"mongodb+srv://skier_358:h1tTh3Sl0p35@clusterskireport.o0o97.mongodb.net/<Shredata>?retryWrites=true&w=majority"
+    // "mongodb+srv://skier_358:h1tTh3Sl0p35@clusterskireport.o0o97.mongodb.net/<Shredata>?retryWrites=true&w=majority"
 };
 
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';

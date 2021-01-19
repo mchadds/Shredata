@@ -18,7 +18,7 @@ const NAMESPACE = 'Server';
 // router defines api's behaviour
 const app = express();
 
-/** Logging the request*/
+/** Logging the request */
 // injecting middleware into router
 // middleware is a function that allows you to modify the request, read it, or do something
 // with the data that is being passed and sent in

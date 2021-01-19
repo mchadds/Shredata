@@ -7,10 +7,10 @@ import ResortsDAO from '../../dao/resortsDAO';
 export default class ResortsController {
     // api call that retrieves all resorts
     static async apiGetResorts(req: Request, res: Response, next: NextFunction) {
-        //const RESORTS_PER_PAGE = 20;
+        // const RESORTS_PER_PAGE = 20;
         // call ResortsDAO to get resorts
         const { resortsList, totalNumResorts } = await ResortsDAO.getResorts();
-        let response = {
+        const response = {
             resorts: resortsList,
             filters: {},
             total_results: totalNumResorts
@@ -21,7 +21,7 @@ export default class ResortsController {
     static async getConfig(req: Request, res: Response, next: NextFunction) {
         const { poolSize, wtimeout, authInfo } = await ResortsDAO.getConfiguration();
         try {
-            let response = {
+            const response = {
                 pool_size: poolSize,
                 wtimeout,
                 ...authInfo
@@ -34,10 +34,10 @@ export default class ResortsController {
 
     // api call to retrieve all resorts and their most recent snow report
     static async apiGetResortsAndSnowReport(req: Request, res: Response, next: NextFunction) {
-        //const RESORTS_PER_PAGE = 20;
+        // const RESORTS_PER_PAGE = 20;
         // call ResortsDAO to retrieve resorts and snow report
         const { resortsList, totalNumResorts } = await ResortsDAO.getResortsSnowReport();
-        let response = {
+        const response = {
             resorts: resortsList,
             filters: {},
             total_results: totalNumResorts
@@ -46,10 +46,10 @@ export default class ResortsController {
     }
 }
 
-//import logging from '../config/logging';
+// import logging from '../config/logging';
 
 // define namespace for sample controller
-//const NAMESPACE = 'Sample Controller';
+// const NAMESPACE = 'Sample Controller';
 
 // const createResort = (req: Request, res: Response, next: NextFunction) => {
 //     let { name, province, latitude, longitude } = req.body;

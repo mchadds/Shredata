@@ -64,7 +64,7 @@ class TwentyFourHourSnowChart extends Component {
                 height: '73%'
             },
             title: {
-                text: 'Past ' + interval + ' Snowfall'
+                text: 'Past ' + interval + ' Snowfall (cm)'
             },
             plotOptions: {
                 column: {

@@ -1,6 +1,18 @@
 # Shredata
+
+## Table of Contents
+- Description
+- Demo
+- Architecture
+- Tools
+
 ## Description
-The purpose of the project is to put a BI spin on snow reports for ski resorts, allowing hills conditions to be compared in one place
+Shredata (Snow Intelligence) is a project that allows users to compare recent snowfalls of their favourite mountains. Have you ever wondered which hill to go to based on the best new snow? Checking every single resort website for the snow report is time consuming (and inconvenient). Shredata has all this information in one place so you can find the most snow with ease! This idea was born out of a passion for being outside and utilizing the data at your fingertips.
+
+## Demo
+This brief clip demonstrates the power and simplicity of the Shredata application:
+
+![Demo Vid](https://github.com/mchadds/Shredata/blob/master/imgs/'Shredata Demo.mp4')
 
 ## Tools
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) Cloud instance of ski resort database
