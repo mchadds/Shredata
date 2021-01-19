@@ -26,7 +26,7 @@ Here is an image from the demo:
 - [Node.js](https://nodejs.org/en/) JavaScript runtime environment
 - [Express.js](https://expressjs.com/) Framework for API
 
-##Languages
+## Languages
 -[Typescript](https://www.typescriptlang.org/)
 -[Python](https://www.python.org/) For webscraping snowfall data
 
