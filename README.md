@@ -13,7 +13,7 @@ This brief gif demonstrates the power and simplicity of the Shredata application
 - Users can select a snowfall interval (or base) by clicking the blue interval buttons at the top of the application
 - This will cause the snowfall information for the selected interval of each resort to appear in the bar chart
 - The circle markers on the map (representing each resort) will render with a radius related to the snowfall from the selected interval
-- The circle markers include a tooltip containg the resorts name and the snowfall value for the selected interval
+- The circle markers include a tooltip containing the resorts name and the snowfall value for the selected interval
 
 ## Tools
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) Cloud database instance
