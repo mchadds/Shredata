@@ -1,5 +1,6 @@
 # Shredata
 
+
 ## Description
 Shredata (Snow Intelligence) is a project that allows users to compare recent snowfalls of their favourite mountains. Have you ever wondered which hill to go to based on the best new snow? Checking every single resort website for the snow report is time consuming (and inconvenient). Shredata has all this information in one place (with daily updates) so you can find the most snow with ease! This idea was born out of a passion for being outside and utilizing the data at your fingertips.
 
